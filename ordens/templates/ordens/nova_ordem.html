@@ -6,9 +6,85 @@
 </head>
 <body>
 
-    <h1>Nova Ordem de Serviço</h1>
+<h1>Nova Ordem de Serviço</h1>
 
-    <p>Aqui ficará o formulário de cadastro.</p>
+<form method="POST">
+
+    {% csrf_token %}
+
+    <label>Cliente:</label>
+    <select name="cliente">
+        {% for cliente in clientes %}
+            <option value="{{ cliente.id }}">
+                {{ cliente.nome }}
+            </option>
+        {% endfor %}
+    </select>
+
+    <br><br>
+
+    <label>Equipamento:</label>
+    <select name="equipamento">
+
+        <option value="TV">Televisão</option>
+        <option value="SOM">Aparelho de Som</option>
+        <option value="MICRO">Micro-ondas</option>
+        <option value="NOTE">Notebook</option>
+        <option value="PC">Computador</option>
+        <option value="MONITOR">Monitor</option>
+        <option value="OUTRO">Outro</option>
+
+    </select>
+
+    
+    <br><br>
+
+    <label>Marca:</label>
+    <input type="text" name="marca" placeholder="Ex: LG, Samsung, TCL">
+
+    <br><br>
+
+    <label>Modelo:</label>
+    <input type="text" name="modelo" placeholder="Ex: 43LM6250">
+    
+    <br><br>
+
+    <br><br>
+
+    <label>Acessórios recebidos:</label>
+    <br>
+
+    <textarea 
+    name="acessorios" 
+    placeholder="Ex: Controle, cabo de força, fonte...">
+    </textarea>
+
+
+    <label>Defeito:</label><br>
+
+    <textarea
+    name="defeito"
+    rows="4"
+    cols="50"
+    placeholder="Descreva o defeito">
+    </textarea>     
+
+    <br><br>
+
+    <label>Observações do técnico:</label>
+    <br>
+
+    <textarea
+        name="observacoes"
+        placeholder="Ex: Fonte em curto, placa oxidada, aguardando orçamento...">
+    </textarea>
+
+
+    <button type="submit">
+        Salvar ordem de Serviço
+    </button>
+
+</form>
 
 </body>
 </html>

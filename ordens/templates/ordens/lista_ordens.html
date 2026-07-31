@@ -18,9 +18,19 @@
 
         <p><strong>Cliente:</strong> {{ ordem.cliente.nome }}</p>
 
+        <p><strong>Equipamento:</strong> {{ ordem.get_equipamento_display }}</p>
+
+        <p><strong>Marca:</strong> {{ ordem.marca }}</p>
+
+        <p><strong>Modelo:</strong> {{ ordem.modelo }}</p>
+
         <p><strong>Defeito:</strong> {{ ordem.defeito }}</p>
 
+        <p><strong>Acessórios:</strong> {{ ordem.acessorios }}</p>
+
         <p><strong>Status:</strong> {{ ordem.status }}</p>
+
+        <p><strong>Observações:</strong> {{ ordem.observacoes }}</p>
 
         <p><strong>Data:</strong> {{ ordem.data_abertura }}</p>
 
