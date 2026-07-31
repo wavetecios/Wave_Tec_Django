@@ -1,10 +1,6 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <title>Ordens de Serviço</title>
-</head>
-<body>
+{% extends "base.html" %}
+
+{% block conteudo %}
 
 <h1>Ordens de Serviço</h1>
 
@@ -28,7 +24,7 @@
 
         <p><strong>Acessórios:</strong> {{ ordem.acessorios }}</p>
 
-        <p><strong>Status:</strong> {{ ordem.status }}</p>
+        <p><strong>Status:</strong> {{ ordem.get_status_display }}</p>
 
         <p><strong>Observações:</strong> {{ ordem.observacoes }}</p>
 
@@ -42,5 +38,4 @@
 
 {% endif %}
 
-</body>
-</html>
+{% endblock %}
