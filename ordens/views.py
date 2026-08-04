@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 
 from .models import OrdemServico
 from equipamentos.models import Equipamento
@@ -6,7 +6,7 @@ from equipamentos.models import Equipamento
 
 def lista_ordens(request):
 
-    ordens = OrdemServico.objects.all()
+    ordens = OrdemServico.objects.all().order_by("-id")
 
     return render(
         request,
@@ -19,12 +19,16 @@ def lista_ordens(request):
 
 def nova_ordem(request, equipamento_id):
 
-    equipamento = Equipamento.objects.get(id=equipamento_id)
+    equipamento = get_object_or_404(
+        Equipamento,
+        id=equipamento_id
+    )
 
     cliente = equipamento.cliente
 
     if request.method == "POST":
 
+        acessorios = equipamento.acessorios
         defeito = request.POST["defeito"]
         observacoes = request.POST["observacoes"]
 
@@ -33,6 +37,8 @@ def nova_ordem(request, equipamento_id):
             equipamento_cadastrado=equipamento,
 
             defeito=defeito,
+
+            acessorios=acessorios,
 
             observacoes=observacoes
 
@@ -48,5 +54,30 @@ def nova_ordem(request, equipamento_id):
         {
             "cliente": cliente,
             "equipamento": equipamento,
+        }
+    )
+
+
+def imprimir_os(request, ordem_id):
+
+    ordem = get_object_or_404(
+        OrdemServico,
+        id=ordem_id
+    )
+
+    atendimento = getattr(
+        ordem,
+        "atendimento",
+        None
+    )
+
+    return render(
+        request,
+        "ordens/imprimir_os.html",
+        {
+            "ordem": ordem,
+            "cliente": ordem.cliente,
+            "equipamento": ordem.equipamento_cadastrado,
+            "atendimento": atendimento,
         }
     )

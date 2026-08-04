@@ -132,17 +132,29 @@ Ordens de Serviço
 
                     </td>
 
+                    ===============================================
                     <td class="text-center">
 
-                        <a
-                            href="{% url 'novo_atendimento' ordem.id %}"
-                            class="btn btn-primary btn-sm">
+                     <a
+                        href="{% url 'novo_atendimento' ordem.id %}"
+                        class="btn btn-primary btn-sm mb-1">
 
-                            🔧 Atendimento
+                        🔧 Atendimento
 
-                        </a>
+                    </a>
 
-                    </td>
+                    <br>
+
+                    <a
+                        href="{% url 'imprimir_os' ordem.id %}"
+                        class="btn btn-success btn-sm">
+
+                        🖨 Imprimir
+
+                    </a>
+
+                   </td>
+                    ===================================================
 
                 </tr>
 
