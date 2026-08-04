@@ -1,0 +1,297 @@
+{% extends "base.html" %}
+
+{% block title %}
+Ordem de Serviço #{{ ordem.id }}
+{% endblock %}
+
+{% block content %}
+
+<div class="card shadow">
+
+    <div class="card-header bg-primary text-white">
+
+        <div class="d-flex justify-content-between align-items-center">
+
+            <h3 class="mb-0">
+
+                📋 Ordem de Serviço #{{ ordem.id }}
+
+            </h3>
+
+            <span class="badge bg-light text-dark">
+
+                {{ ordem.get_status_display }}
+
+            </span>
+
+        </div>
+
+    </div>
+
+    <div class="card-body">
+
+        <div class="row">
+
+            <div class="col-md-6">
+
+                <h5 class="text-primary">
+
+                    👤 Cliente
+
+                </h5>
+
+                <hr>
+
+                <p>
+
+                    <strong>Nome:</strong>
+
+                    {{ cliente.nome }}
+
+                </p>
+
+                <p>
+
+                    <strong>Telefone:</strong>
+
+                    {{ cliente.telefone }}
+
+                </p>
+
+                <p>
+
+                    <strong>Endereço:</strong>
+
+                    {{ cliente.endereco }}
+
+                </p>
+
+            </div>
+
+            <div class="col-md-6">
+
+                <h5 class="text-success">
+
+                    🖥 Equipamento
+
+                </h5>
+
+                <hr>
+
+                <p>
+
+                    <strong>Tipo:</strong>
+
+                    {{ equipamento.get_tipo_display }}
+
+                </p>
+
+                <p>
+
+                    <strong>Marca:</strong>
+
+                    {{ equipamento.marca }}
+
+                </p>
+
+                <p>
+
+                    <strong>Modelo:</strong>
+
+                    {{ equipamento.modelo }}
+
+                </p>
+
+                <p>
+
+                    <strong>Nº Série:</strong>
+
+                    {{ equipamento.numero_serie }}
+
+                </p>
+
+            </div>
+
+        </div>
+
+        <hr>
+
+        <h5 class="text-danger">
+
+            📄 Ordem de Serviço
+
+        </h5>
+
+        <br>
+
+        <p>
+
+            <strong>Defeito Informado</strong>
+
+        </p>
+
+        <div class="border rounded p-3 bg-light">
+
+            {{ ordem.defeito }}
+
+        </div>
+
+        <br>
+
+        <p>
+
+            <strong>Acessórios Recebidos</strong>
+
+        </p>
+
+        <div class="border rounded p-3 bg-light">
+
+            {{ equipamento.acessorios }}
+
+        </div>
+
+        <br>
+
+        <p>
+
+            <strong>Observações</strong>
+
+        </p>
+
+        <div class="border rounded p-3 bg-light">
+
+            {{ ordem.observacoes }}
+
+        </div>
+
+        <hr>
+
+        <h5 class="text-warning">
+
+            🔧 Atendimento Técnico
+
+        </h5>
+
+        <br>
+
+        {% if atendimento %}
+
+        <p>
+
+            <strong>Diagnóstico</strong>
+
+        </p>
+
+        <div class="border rounded p-3 bg-light">
+
+            {{ atendimento.diagnostico }}
+
+        </div>
+
+        <br>
+
+        <p>
+
+            <strong>Serviço Executado</strong>
+
+        </p>
+
+        <div class="border rounded p-3 bg-light">
+
+            {{ atendimento.servico_executado }}
+
+        </div>
+
+        <br>
+
+        <p>
+
+            <strong>Peças Utilizadas</strong>
+
+        </p>
+
+        <div class="border rounded p-3 bg-light">
+
+            {{ atendimento.pecas_utilizadas }}
+
+        </div>
+
+        <br>
+
+        <div class="row">
+
+            <div class="col-md-6">
+
+                <strong>Valor</strong>
+
+                <p>
+
+                    R$ {{ atendimento.valor }}
+
+                </p>
+
+            </div>
+
+            <div class="col-md-6">
+
+                <strong>Forma de Pagamento</strong>
+
+                <p>
+
+                    {{ atendimento.forma_pagamento }}
+
+                </p>
+
+            </div>
+
+        </div>
+
+        {% else %}
+
+        <div class="alert alert-warning">
+
+            Nenhum atendimento realizado.
+
+        </div>
+
+        {% endif %}
+
+        <hr>
+
+        <div class="d-flex justify-content-between">
+
+            <a
+                href="{% url 'lista_ordens' %}"
+                class="btn btn-secondary">
+
+                ← Voltar
+
+            </a>
+
+            <div>
+
+                <a
+                    href="{% url 'novo_atendimento' ordem.id %}"
+                    class="btn btn-primary">
+
+                    🔧 Atendimento
+
+                </a>
+
+                <a
+                    href="{% url 'imprimir_os' ordem.id %}"
+                    class="btn btn-success">
+
+                    🖨 Imprimir
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

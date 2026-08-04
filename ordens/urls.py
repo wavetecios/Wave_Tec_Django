@@ -16,6 +16,12 @@ urlpatterns = [
     ),
 
     path(
+        "<int:ordem_id>/",
+        views.detalhe_ordem,
+        name="detalhe_ordem"
+    ),
+
+    path(
         "imprimir/<int:ordem_id>/",
         views.imprimir_os,
         name="imprimir_os"

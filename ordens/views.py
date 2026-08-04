@@ -28,7 +28,6 @@ def nova_ordem(request, equipamento_id):
 
     if request.method == "POST":
 
-        acessorios = equipamento.acessorios
         defeito = request.POST["defeito"]
         observacoes = request.POST["observacoes"]
 
@@ -38,13 +37,11 @@ def nova_ordem(request, equipamento_id):
 
             defeito=defeito,
 
-            acessorios=acessorios,
+            acessorios=equipamento.acessorios,
 
             observacoes=observacoes
 
         )
-
-        print("ORDEM SALVA")
 
         return redirect("lista_ordens")
 
@@ -54,6 +51,31 @@ def nova_ordem(request, equipamento_id):
         {
             "cliente": cliente,
             "equipamento": equipamento,
+        }
+    )
+
+
+def detalhe_ordem(request, ordem_id):
+
+    ordem = get_object_or_404(
+        OrdemServico,
+        id=ordem_id
+    )
+
+    atendimento = getattr(
+        ordem,
+        "atendimento",
+        None
+    )
+
+    return render(
+        request,
+        "ordens/detalhe_ordem.html",
+        {
+            "ordem": ordem,
+            "cliente": ordem.cliente,
+            "equipamento": ordem.equipamento_cadastrado,
+            "atendimento": atendimento,
         }
     )
 
