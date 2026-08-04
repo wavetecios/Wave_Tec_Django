@@ -1,111 +1,171 @@
 {% extends "base.html" %}
 
+{% block title %}
+Ordens de Serviço
+{% endblock %}
+
 {% block content %}
 
-<div class="d-flex justify-content-between align-items-center mb-4">
+<div class="card shadow">
 
-    <h2>📋 Ordens de Serviço</h2>
+    <div class="card-header bg-primary text-white">
 
-    <a href="/ordens/nova/" class="btn btn-success">
-        + Nova Ordem
-    </a>
+        <div class="d-flex justify-content-between align-items-center">
+
+            <h3 class="mb-0">
+                📋 Ordens de Serviço
+            </h3>
+
+            <a href="/" class="btn btn-light btn-sm">
+                🏠 Início
+            </a>
+
+        </div>
+
+    </div>
+
+    <div class="card-body">
+
+        <table class="table table-striped table-hover align-middle">
+
+            <thead class="table-light">
+
+                <tr>
+
+                    <th>OS</th>
+                    <th>Cliente</th>
+                    <th>Equipamento</th>
+                    <th>Status</th>
+                    <th>Entrada</th>
+                    <th class="text-center">Ações</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                {% for ordem in ordens %}
+
+                <tr>
+
+                    <td>
+                        <strong>#{{ ordem.id }}</strong>
+                    </td>
+
+                    <td>
+                        {{ ordem.cliente.nome }}
+                    </td>
+
+                    <td>
+
+                        {{ ordem.equipamento_cadastrado.get_tipo_display }}
+
+                        <br>
+
+                        <small class="text-muted">
+
+                            {{ ordem.equipamento_cadastrado.marca }}
+                            {{ ordem.equipamento_cadastrado.modelo }}
+
+                        </small>
+
+                    </td>
+
+                    <td>
+
+                        {% if ordem.status == "ABERTA" %}
+
+                            <span class="badge bg-danger">
+                                Aberta
+                            </span>
+
+                        {% elif ordem.status == "EM_ANALISE" %}
+
+                            <span class="badge bg-warning text-dark">
+                                Em análise
+                            </span>
+
+                        {% elif ordem.status == "AGUARDANDO_PECA" %}
+
+                            <span class="badge bg-info text-dark">
+                                Aguardando peça
+                            </span>
+
+                        {% elif ordem.status == "EM_REPARO" %}
+
+                            <span class="badge bg-primary">
+                                Em reparo
+                            </span>
+
+                        {% elif ordem.status == "PRONTO" %}
+
+                            <span class="badge bg-success">
+                                Pronto
+                            </span>
+
+                        {% elif ordem.status == "SEM_CONSERTO" %}
+
+                            <span class="badge bg-dark">
+                                Sem conserto
+                            </span>
+
+                        {% elif ordem.status == "ENTREGUE" %}
+
+                            <span class="badge bg-secondary">
+                                Entregue
+                            </span>
+
+                        {% else %}
+
+                            <span class="badge bg-light text-dark">
+                                {{ ordem.get_status_display }}
+                            </span>
+
+                        {% endif %}
+
+                    </td>
+
+                    <td>
+
+                        {{ ordem.data_abertura|date:"d/m/Y H:i" }}
+
+                    </td>
+
+                    <td class="text-center">
+
+                        <a
+                            href="{% url 'novo_atendimento' ordem.id %}"
+                            class="btn btn-primary btn-sm">
+
+                            🔧 Atendimento
+
+                        </a>
+
+                    </td>
+
+                </tr>
+
+                {% empty %}
+
+                <tr>
+
+                    <td colspan="6" class="text-center">
+
+                        Nenhuma Ordem de Serviço cadastrada.
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
 
 </div>
-
-<table class="table table-striped table-hover table-bordered shadow-sm">
-
-    <thead class="table-primary">
-
-        <tr>
-
-            <th>OS</th>
-            <th>Cliente</th>
-            <th>Equipamento</th>
-            <th>Marca</th>
-            <th>Modelo</th>
-            <th>Status</th>
-            <th>Data</th>
-
-        </tr>
-
-    </thead>
-
-    <tbody>
-
-        {% for ordem in ordens %}
-
-        <tr>
-
-            <td>{{ ordem.id }}</td>
-
-            <td>{{ ordem.cliente.nome }}</td>
-
-            <td>{{ ordem.get_equipamento_display }}</td>
-
-            <td>{{ ordem.marca }}</td>
-
-            <td>{{ ordem.modelo }}</td>
-
-        
-            <td>
-
-                {% if ordem.status == "ABERTA" %}
-
-                <span class="badge bg-danger">
-                    {{ ordem.get_status_display }}
-                </span>
-
-                {% elif ordem.status == "EM_ANALISE" %}
-
-                <span class="badge bg-warning text-dark">
-                    {{ ordem.get_status_display }}
-                </span>
-
-                {% elif ordem.status == "EM_REPARO" %}
-
-                    <span class="badge bg-primary">
-                        {{ ordem.get_status_display }}
-                    </span>
-
-                {% elif ordem.status == "PRONTA" %}
-
-                    <span class="badge bg-success">
-                        {{ ordem.get_status_display }}
-                    </span>
-
-                {% else %}
-
-                    <span class="badge bg-secondary">
-                        {{ ordem.get_status_display }}
-                    </span>
-
-                {% endif %}
-
-            </td>
-
-
-            
-
-            <td>{{ ordem.data_abertura }}</td>
-
-        </tr>
-
-        {% empty %}
-
-        <tr>
-
-            <td colspan="7" class="text-center">
-
-                Nenhuma Ordem de Serviço cadastrada.
-
-            </td>
-
-        </tr>
-
-        {% endfor %}
-
-    </tbody>
-
-</table>
 
 {% endblock %}

@@ -1,90 +1,205 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <title>Nova Ordem de Serviço</title>
-</head>
-<body>
+{% extends "base.html" %}
 
-<h1>Nova Ordem de Serviço</h1>
+{% block title %}
+Nova Ordem de Serviço
+{% endblock %}
 
-<form method="POST">
+{% block content %}
 
-    {% csrf_token %}
+<div class="card shadow">
 
-    <label>Cliente:</label>
-    <select name="cliente">
-        {% for cliente in clientes %}
-            <option value="{{ cliente.id }}">
-                {{ cliente.nome }}
-            </option>
-        {% endfor %}
-    </select>
+    <div class="card-header bg-primary text-white">
 
-    <br><br>
+        <h3 class="mb-0">
+            📋 Nova Ordem de Serviço
+        </h3>
 
-    <label>Equipamento:</label>
-    <select name="equipamento">
+    </div>
 
-        <option value="TV">Televisão</option>
-        <option value="SOM">Aparelho de Som</option>
-        <option value="MICRO">Micro-ondas</option>
-        <option value="NOTE">Notebook</option>
-        <option value="PC">Computador</option>
-        <option value="MONITOR">Monitor</option>
-        <option value="OUTRO">Outro</option>
+    <div class="card-body">
 
-    </select>
+        <div class="alert alert-light border mb-4">
 
-    
-    <br><br>
+            <strong>Fluxo do Atendimento</strong>
 
-    <label>Marca:</label>
-    <input type="text" name="marca" placeholder="Ex: LG, Samsung, TCL">
+            <div class="mt-2">
 
-    <br><br>
+                ✅ Cliente
+                <span class="mx-2">→</span>
+                ✅ Equipamento
+                <span class="mx-2">→</span>
+                <strong class="text-primary">
+                    Ordem de Serviço
+                </strong>
 
-    <label>Modelo:</label>
-    <input type="text" name="modelo" placeholder="Ex: 43LM6250">
-    
-    <br><br>
+            </div>
 
-    <br><br>
+        </div>
 
-    <label>Acessórios recebidos:</label>
-    <br>
+        <form method="POST">
 
-    <textarea 
-    name="acessorios" 
-    placeholder="Ex: Controle, cabo de força, fonte...">
-    </textarea>
+            {% csrf_token %}
 
+            <div class="row">
 
-    <label>Defeito:</label><br>
+                <div class="col-md-6 mb-3">
 
-    <textarea
-    name="defeito"
-    rows="4"
-    cols="50"
-    placeholder="Descreva o defeito">
-    </textarea>     
+                    <label class="form-label">
 
-    <br><br>
+                        Cliente
 
-    <label>Observações do técnico:</label>
-    <br>
+                    </label>
 
-    <textarea
-        name="observacoes"
-        placeholder="Ex: Fonte em curto, placa oxidada, aguardando orçamento...">
-    </textarea>
+                    <input
+                        type="text"
+                        class="form-control"
+                        value="{{ cliente.nome }}"
+                        readonly>
 
+                </div>
 
-    <button type="submit">
-        Salvar ordem de Serviço
-    </button>
+                <div class="col-md-6 mb-3">
 
-</form>
+                    <label class="form-label">
 
-</body>
-</html>
+                        Telefone
+
+                    </label>
+
+                    <input
+                        type="text"
+                        class="form-control"
+                        value="{{ cliente.telefone }}"
+                        readonly>
+
+                </div>
+
+            </div>
+
+            <div class="row">
+
+                <div class="col-md-4 mb-3">
+
+                    <label class="form-label">
+
+                        Equipamento
+
+                    </label>
+
+                    <input
+                        type="text"
+                        class="form-control"
+                        value="{{ equipamento.get_tipo_display }}"
+                        readonly>
+
+                </div>
+
+                <div class="col-md-4 mb-3">
+
+                    <label class="form-label">
+
+                        Marca
+
+                    </label>
+
+                    <input
+                        type="text"
+                        class="form-control"
+                        value="{{ equipamento.marca }}"
+                        readonly>
+
+                </div>
+
+                <div class="col-md-4 mb-3">
+
+                    <label class="form-label">
+
+                        Modelo
+
+                    </label>
+
+                    <input
+                        type="text"
+                        class="form-control"
+                        value="{{ equipamento.modelo }}"
+                        readonly>
+
+                </div>
+
+            </div>
+
+            <div class="mb-3">
+
+                <label class="form-label">
+
+                    Acessórios Recebidos
+
+                </label>
+
+                <textarea
+                    class="form-control"
+                    rows="3"
+                    readonly>{{ equipamento.acessorios }}</textarea>
+
+            </div>
+
+            <div class="mb-3">
+
+                <label class="form-label">
+
+                    Defeito Relatado pelo Cliente
+
+                </label>
+
+                <textarea
+                    name="defeito"
+                    class="form-control"
+                    rows="5"
+                    placeholder="Descreva exatamente o defeito informado pelo cliente..."
+                    required></textarea>
+
+            </div>
+
+            <div class="mb-4">
+
+                <label class="form-label">
+
+                    Observações Iniciais
+
+                </label>
+
+                <textarea
+                    name="observacoes"
+                    class="form-control"
+                    rows="4"
+                    placeholder="Observações da recepção..."></textarea>
+
+            </div>
+
+            <div class="d-flex justify-content-between">
+
+                <a
+                    href="{% url 'novo_equipamento' cliente.id %}"
+                    class="btn btn-secondary">
+
+                    ← Voltar
+
+                </a>
+
+                <button
+                    type="submit"
+                    class="btn btn-success">
+
+                    Salvar Ordem →
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

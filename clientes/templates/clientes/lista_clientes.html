@@ -6,8 +6,8 @@
 
     <h2>👥 Clientes Cadastrados</h2>
 
-    <a href="#" class="btn btn-success">
-        + Novo Cliente
+    <a href="{% url 'novo_cliente' %}" class="btn btn-success">
+    + Novo Cliente
     </a>
 
 </div>
@@ -21,7 +21,7 @@
             <th>ID</th>
             <th>Nome</th>
             <th>Telefone</th>
-            <th>Cidade</th>
+            <th>Endereco</th>
 
         </tr>
 
@@ -39,7 +39,7 @@
 
             <td>{{ cliente.telefone }}</td>
 
-            <td>{{ cliente.cidade }}</td>
+            <td>{{ cliente.endereco }}</td>
 
         </tr>
 

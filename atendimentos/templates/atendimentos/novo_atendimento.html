@@ -1,0 +1,215 @@
+{% extends "base.html" %}
+
+{% block title %}
+Atendimento Técnico
+{% endblock %}
+
+{% block content %}
+
+<div class="card shadow">
+
+    <div class="card-header bg-primary text-white">
+
+        <h3 class="mb-0">
+            🔧 Atendimento Técnico
+        </h3>
+
+    </div>
+
+    <div class="card-body">
+
+        <div class="alert alert-light border mb-4">
+
+            <strong>Ordem de Serviço #{{ ordem.id }}</strong>
+
+            <div class="mt-2">
+
+                👤 <strong>{{ ordem.cliente.nome }}</strong>
+
+                <br>
+
+                📞 {{ ordem.cliente.telefone }}
+
+                <br>
+
+                🖥 {{ ordem.equipamento_cadastrado.get_tipo_display }}
+                -
+                {{ ordem.equipamento_cadastrado.marca }}
+                {{ ordem.equipamento_cadastrado.modelo }}
+
+            </div>
+
+        </div>
+
+        <div class="mb-3">
+
+            <label class="form-label">
+
+                Defeito Informado
+
+            </label>
+
+            <textarea
+                class="form-control"
+                rows="4"
+                readonly>{{ ordem.defeito }}</textarea>
+
+        </div>
+
+        <div class="mb-4">
+
+            <label class="form-label">
+
+                Acessórios Recebidos
+
+            </label>
+
+            <textarea
+                class="form-control"
+                rows="2"
+                readonly>{{ ordem.equipamento_cadastrado.acessorios }}</textarea>
+
+        </div>
+
+        <hr>
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+            <div class="mb-3">
+
+                <label class="form-label">
+
+                    Diagnóstico
+
+                </label>
+
+                <textarea
+                    name="diagnostico"
+                    class="form-control"
+                    rows="4">{{ atendimento.diagnostico }}</textarea>
+
+            </div>
+
+            <div class="mb-3">
+
+                <label class="form-label">
+
+                    Serviço Executado
+
+                </label>
+
+                <textarea
+                    name="servico_executado"
+                    class="form-control"
+                    rows="4">{{ atendimento.servico_executado }}</textarea>
+
+            </div>
+
+            <div class="mb-3">
+
+                <label class="form-label">
+
+                    Peças Utilizadas
+
+                </label>
+
+                <textarea
+                    name="pecas_utilizadas"
+                    class="form-control"
+                    rows="3">{{ atendimento.pecas_utilizadas }}</textarea>
+
+            </div>
+
+            <div class="row">
+
+                <div class="col-md-4">
+
+                    <label class="form-label">
+
+                        Valor
+
+                    </label>
+
+                    <input
+                        type="number"
+                        step="0.01"
+                        name="valor"
+                        class="form-control"
+                        value="{{ atendimento.valor }}">
+
+                </div>
+
+                <div class="col-md-4">
+
+                    <label class="form-label">
+
+                        Forma de Pagamento
+
+                    </label>
+
+                    <input
+                        type="text"
+                        name="forma_pagamento"
+                        class="form-control"
+                        value="{{ atendimento.forma_pagamento }}">
+
+                </div>
+
+                <div class="col-md-4">
+
+                    <label class="form-label">
+
+                        Status
+
+                    </label>
+
+                    <select
+                        name="status"
+                        class="form-select">
+
+                        {% for valor, texto in atendimento.STATUS %}
+
+                            <option
+                                value="{{ valor }}"
+                                {% if atendimento.status == valor %}selected{% endif %}>
+
+                                {{ texto }}
+
+                            </option>
+
+                        {% endfor %}
+
+                    </select>
+
+                </div>
+
+            </div>
+
+            <div class="d-flex justify-content-between mt-4">
+
+                <a
+                    href="{% url 'lista_ordens' %}"
+                    class="btn btn-secondary">
+
+                    ← Voltar
+
+                </a>
+
+                <button
+                    class="btn btn-success">
+
+                    💾 Salvar Atendimento
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

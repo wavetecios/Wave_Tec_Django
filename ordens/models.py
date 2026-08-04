@@ -1,59 +1,36 @@
 from django.db import models
-from clientes.models import Cliente
+from equipamentos.models import Equipamento
 
 
 class OrdemServico(models.Model):
 
-    EQUIPAMENTOS = [
-        ("TV", "Televisão"),
-        ("SOM", "Aparelho de Som"),
-        ("MICRO", "Micro-ondas"),
-        ("NOTE", "Notebook"),
-        ("PC", "Computador"),
-        ("MONITOR", "Monitor"),
-        ("OUTRO", "Outro"),
-    ]
-
     STATUS = [
         ("ABERTA", "Aberta"),
         ("EM_ANALISE", "Em análise"),
+        ("AGUARDANDO_PECA", "Aguardando peça"),
         ("EM_REPARO", "Em reparo"),
-        ("PRONTA", "Pronta"),
+        ("PRONTO", "Pronto"),
+        ("SEM_CONSERTO", "Sem conserto"),
         ("ENTREGUE", "Entregue"),
     ]
 
-    cliente = models.ForeignKey(
-        Cliente,
-        on_delete=models.CASCADE
+    equipamento_cadastrado = models.ForeignKey(
+        Equipamento,
+        on_delete=models.CASCADE,
+        related_name="ordens"
     )
 
-    equipamento = models.CharField(
-        max_length=20,
-        choices=EQUIPAMENTOS,
-        default="OUTRO"
-    )
-
-    marca = models.CharField(
-        max_length=50,
-        blank=True
-    )
-
-    modelo = models.CharField(
-        max_length=50,
-        blank=True
-    )
-
-    data_abertura = models.DateField(
+    data_abertura = models.DateTimeField(
         auto_now_add=True
     )
 
     defeito = models.TextField()
 
-    observacoes = models.TextField(
+    acessorios = models.TextField(
         blank=True
     )
 
-    acessorios = models.TextField(
+    observacoes = models.TextField(
         blank=True
     )
 
@@ -68,7 +45,7 @@ class OrdemServico(models.Model):
     )
 
     forma_pagamento = models.CharField(
-        max_length=20,
+        max_length=30,
         blank=True
     )
 
@@ -77,6 +54,10 @@ class OrdemServico(models.Model):
         choices=STATUS,
         default="ABERTA"
     )
+
+    @property
+    def cliente(self):
+        return self.equipamento_cadastrado.cliente
 
     def __str__(self):
         return f"OS {self.id} - {self.cliente.nome}"

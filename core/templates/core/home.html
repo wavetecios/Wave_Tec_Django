@@ -1,0 +1,128 @@
+{% extends "base.html" %}
+
+{% block title %}
+Wave Tec - Sistema de Assistência Técnica
+{% endblock %}
+
+{% block content %}
+
+<div class="text-center mb-5">
+
+    <h1 class="display-5 fw-bold text-primary">
+        🔧 Wave Tec
+    </h1>
+
+    <p class="lead">
+        Sistema de Gerenciamento de Assistência Técnica
+    </p>
+
+</div>
+
+<div class="row text-center mb-5">
+
+    <div class="col-md-4">
+
+        <div class="card shadow border-primary">
+
+            <div class="card-body">
+
+                <h5 class="card-title">
+                    👥 Clientes
+                </h5>
+
+                <h2 class="text-primary">
+
+                    {{ total_clientes }}
+
+                </h2>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-md-4">
+
+        <div class="card shadow border-success">
+
+            <div class="card-body">
+
+                <h5 class="card-title">
+                    🖥 Equipamentos
+                </h5>
+
+                <h2 class="text-success">
+
+                    {{ total_equipamentos }}
+
+                </h2>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-md-4">
+
+        <div class="card shadow border-danger">
+
+            <div class="card-body">
+
+                <h5 class="card-title">
+                    📋 Ordens
+                </h5>
+
+                <h2 class="text-danger">
+
+                    {{ total_ordens }}
+
+                </h2>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="row g-3">
+
+    <div class="col-md-4">
+
+        <a href="/clientes/" class="btn btn-primary w-100 p-3">
+
+            👥 Clientes
+
+        </a>
+
+       
+    </div>
+
+    <div class="col-md-4">
+
+        <a href="/equipamentos/" class="btn btn-success w-100 p-3">
+
+            🖥 Equipamentos
+
+        </a>
+
+    </div>
+
+    <div class="col-md-4">
+
+        <a href="/ordens/" class="btn btn-danger w-100 p-3">
+
+            📋 Ordens de Serviço
+
+        </a>
+
+    </div>
+
+     
+
+</div>
+
+{% endblock %}

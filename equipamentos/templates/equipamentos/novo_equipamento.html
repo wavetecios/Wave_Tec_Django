@@ -1,107 +1,206 @@
 {% extends "base.html" %}
 
 {% block title %}
-Novo Equipamento
+Cadastro do Equipamento
 {% endblock %}
 
 {% block content %}
 
-<h2 class="mb-4">Novo Equipamento</h2>
+<div class="card shadow">
 
-<form method="POST">
+    <div class="card-header bg-primary text-white">
 
-    {% csrf_token %}
-
-    <div class="mb-3">
-        <label class="form-label">Cliente</label>
-
-        <select name="cliente" class="form-select">
-
-            {% for cliente in clientes %}
-                <option value="{{ cliente.id }}">
-                    {{ cliente.nome }}
-                </option>
-            {% endfor %}
-
-        </select>
-    </div>
-
-    <div class="mb-3">
-        <label class="form-label">Tipo do Equipamento</label>
-
-        <select name="tipo" class="form-select">
-            <option value="TV">Televisão</option>
-            <option value="NOTE">Notebook</option>
-            <option value="PC">Computador</option>
-            <option value="CEL">Celular</option>
-            <option value="SOM">Aparelho de Som</option>
-            <option value="MICRO">Micro-ondas</option>
-            <option value="OUTRO">Outro</option>
-        </select>
-    </div>
-
-    <div class="mb-3">
-        <label class="form-label">Marca</label>
-
-        <input
-            type="text"
-            name="marca"
-            class="form-control">
-    </div>
-
-    <div class="mb-3">
-        <label class="form-label">Modelo</label>
-
-        <input
-            type="text"
-            name="modelo"
-            class="form-control">
-    </div>
-
-    <div class="mb-3">
-        <label class="form-label">Número de Série</label>
-
-        <input
-            type="text"
-            name="numero_serie"
-            class="form-control">
-    </div>
-
-    <div class="mb-3">
-        <label class="form-label">Acessórios</label>
-
-        <textarea
-            name="acessorios"
-            class="form-control"
-            rows="3"></textarea>
-    </div>
-
-    <div class="form-check mb-4">
-
-        <input
-            class="form-check-input"
-            type="checkbox"
-            id="garantia"
-            name="garantia">
-
-        <label
-            class="form-check-label"
-            for="garantia">
-
-            Equipamento na garantia
-
-        </label>
+        <h3 class="mb-0">
+            🖥 Cadastro do Equipamento
+        </h3>
 
     </div>
 
-    <button
-        type="submit"
-        class="btn btn-success">
+    <div class="card-body">
 
-        Salvar Equipamento
+        <!-- Fluxo do atendimento -->
 
-    </button>
+        <div class="alert alert-light border mb-4">
 
-</form>
+            <strong>Fluxo do Atendimento</strong>
+
+            <div class="mt-2">
+
+                ✅ Cliente
+
+                <span class="mx-2">→</span>
+
+                <strong class="text-primary">
+                    Equipamento
+                </strong>
+
+                <span class="mx-2">→</span>
+
+                Ordem de Serviço
+
+            </div>
+
+        </div>
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+            <div class="mb-3">
+
+                <label class="form-label">
+
+                    Cliente
+
+                </label>
+
+                <input
+                    type="text"
+                    class="form-control"
+                    value="{{ cliente.nome }}"
+                    readonly>
+
+            </div>
+
+            <div class="mb-3">
+
+                <label class="form-label">
+
+                    Tipo do Equipamento
+
+                </label>
+
+                <select
+                    name="tipo"
+                    class="form-select"
+                    required>
+
+                    <option value="">Selecione...</option>
+
+                    <option value="TV">Televisão</option>
+
+                    <option value="NOTE">Notebook</option>
+
+                    <option value="PC">Computador</option>
+
+                    <option value="CEL">Celular</option>
+
+                    <option value="SOM">Aparelho de Som</option>
+
+                    <option value="MICRO">Micro-ondas</option>
+
+                    <option value="OUTRO">Outro</option>
+
+                </select>
+
+            </div>
+
+            <div class="mb-3">
+
+                <label class="form-label">
+
+                    Marca
+
+                </label>
+
+                <input
+                    type="text"
+                    name="marca"
+                    class="form-control"
+                    placeholder="Ex: Samsung, LG, Dell..."
+                    required>
+
+            </div>
+
+            <div class="mb-3">
+
+                <label class="form-label">
+
+                    Modelo
+
+                </label>
+
+                <input
+                    type="text"
+                    name="modelo"
+                    class="form-control"
+                    placeholder="Modelo do equipamento">
+
+            </div>
+
+            <div class="mb-3">
+
+                <label class="form-label">
+
+                    Número de Série
+
+                </label>
+
+                <input
+                    type="text"
+                    name="numero_serie"
+                    class="form-control">
+
+            </div>
+
+            <div class="mb-3">
+
+                <label class="form-label">
+
+                    Acessórios Recebidos
+
+                </label>
+
+                <textarea
+                    name="acessorios"
+                    class="form-control"
+                    rows="3"
+                    placeholder="Controle, cabo de força, carregador, bateria..."></textarea>
+
+            </div>
+
+            <div class="form-check mb-4">
+
+                <input
+                    class="form-check-input"
+                    type="checkbox"
+                    id="garantia"
+                    name="garantia">
+
+                <label
+                    class="form-check-label"
+                    for="garantia">
+
+                    Equipamento na Garantia
+
+                </label>
+
+            </div>
+
+            <div class="d-flex justify-content-between">
+
+                <a
+                    href="{% url 'novo_cliente' %}"
+                    class="btn btn-secondary">
+
+                    ← Voltar
+
+                </a>
+
+                <button
+                    type="submit"
+                    class="btn btn-success">
+
+                    Salvar e Continuar →
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
 
 {% endblock %}
