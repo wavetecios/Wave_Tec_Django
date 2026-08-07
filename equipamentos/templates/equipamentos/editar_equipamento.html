@@ -1,0 +1,181 @@
+{% extends "base.html" %}
+
+{% block title %}
+Editar Equipamento
+{% endblock %}
+
+{% block content %}
+
+<div class="card shadow">
+
+    <div class="card-header bg-warning text-dark">
+
+        <h3 class="mb-0">
+            ✏️ Editar Equipamento
+        </h3>
+
+    </div>
+
+    <div class="card-body">
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+            <div class="mb-3">
+
+                <label class="form-label">
+
+                    Cliente
+
+                </label>
+
+                <input
+                    type="text"
+                    class="form-control"
+                    value="{{ equipamento.cliente.nome }}"
+                    readonly>
+
+            </div>
+
+            <div class="mb-3">
+
+                <label class="form-label">
+
+                    Tipo do Equipamento
+
+                </label>
+
+                <select
+                    name="tipo"
+                    class="form-select"
+                    required>
+
+                    <option value="TV" {% if equipamento.tipo == "TV" %}selected{% endif %}>Televisão</option>
+
+                    <option value="NOTE" {% if equipamento.tipo == "NOTE" %}selected{% endif %}>Notebook</option>
+
+                    <option value="PC" {% if equipamento.tipo == "PC" %}selected{% endif %}>Computador</option>
+
+                    <option value="CEL" {% if equipamento.tipo == "CEL" %}selected{% endif %}>Celular</option>
+
+                    <option value="SOM" {% if equipamento.tipo == "SOM" %}selected{% endif %}>Aparelho de Som</option>
+
+                    <option value="MICRO" {% if equipamento.tipo == "MICRO" %}selected{% endif %}>Micro-ondas</option>
+
+                    <option value="OUTRO" {% if equipamento.tipo == "OUTRO" %}selected{% endif %}>Outro</option>
+
+                </select>
+
+            </div>
+
+            <div class="mb-3">
+
+                <label class="form-label">
+
+                    Marca
+
+                </label>
+
+                <input
+                    type="text"
+                    name="marca"
+                    class="form-control"
+                    value="{{ equipamento.marca }}"
+                    required>
+
+            </div>
+
+            <div class="mb-3">
+
+                <label class="form-label">
+
+                    Modelo
+
+                </label>
+
+                <input
+                    type="text"
+                    name="modelo"
+                    class="form-control"
+                    value="{{ equipamento.modelo }}">
+
+            </div>
+
+            <div class="mb-3">
+
+                <label class="form-label">
+
+                    Número de Série
+
+                </label>
+
+                <input
+                    type="text"
+                    name="numero_serie"
+                    class="form-control"
+                    value="{{ equipamento.numero_serie }}">
+
+            </div>
+
+            <div class="mb-3">
+
+                <label class="form-label">
+
+                    Acessórios Recebidos
+
+                </label>
+
+                <textarea
+                    name="acessorios"
+                    class="form-control"
+                    rows="3">{{ equipamento.acessorios }}</textarea>
+
+            </div>
+
+            <div class="form-check mb-4">
+
+                <input
+                    class="form-check-input"
+                    type="checkbox"
+                    id="garantia"
+                    name="garantia"
+                    {% if equipamento.garantia %}checked{% endif %}>
+
+                <label
+                    class="form-check-label"
+                    for="garantia">
+
+                    Equipamento na Garantia
+
+                </label>
+
+            </div>
+
+            <div class="d-flex justify-content-between">
+
+                <a
+                    href="{% url 'lista_equipamentos' %}"
+                    class="btn btn-secondary">
+
+                    ← Voltar
+
+                </a>
+
+                <button
+                    type="submit"
+                    class="btn btn-success">
+
+                    💾 Salvar Alterações
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

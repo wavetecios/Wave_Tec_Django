@@ -132,31 +132,39 @@ Ordens de Serviço
 
                     </td>
 
-                
-                    <td class="text-center">
-
-                     <a
-                        
-                        href="{% url 'detalhe_ordem' ordem.id %}"
-                        class="btn btn-info btn-sm mb-1">
-
-                        🔧 Atendimento
-
-                    </a>
-
-                    <br>
-
-                    <a
-                        
-                        href="{% url 'novo_atendimento' ordem.id %}"
-                        class="btn btn-primary btn-sm mb-1">
-
-                        🖨 Imprimir
-
-                    </a>
                     
-                   </td>
-                    
+                     <td class="text-center" style="width:180px;">
+
+                    <div class="d-grid gap-2">
+
+                        <a
+                            href="{% url 'detalhe_ordem' ordem.id %}"
+                            class="btn btn-info btn-sm">
+
+                            👁 Visualizar
+
+                        </a>
+
+                        <a
+                            href="{% url 'novo_atendimento' ordem.id %}"
+                            class="btn btn-warning btn-sm">
+
+                            🔧 Atendimento
+
+                        </a>
+
+                        <a
+                            href="{% url 'imprimir_os' ordem.id %}"
+                            class="btn btn-primary btn-sm">
+
+                            🖨 Imprimir
+
+                        </a>
+
+                    </div>
+
+                </td>
+            
 
                 </tr>
 

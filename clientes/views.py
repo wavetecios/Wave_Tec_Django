@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 
 from .models import Cliente
 
@@ -30,8 +30,6 @@ def novo_cliente(request):
             endereco=endereco
         )
 
-        print("CLIENTE SALVO")
-
         return redirect(
             "novo_equipamento",
             cliente.id
@@ -40,4 +38,30 @@ def novo_cliente(request):
     return render(
         request,
         "clientes/novo_cliente.html"
+    )
+
+
+def editar_cliente(request, cliente_id):
+
+    cliente = get_object_or_404(
+        Cliente,
+        id=cliente_id
+    )
+
+    if request.method == "POST":
+
+        cliente.nome = request.POST["nome"]
+        cliente.telefone = request.POST["telefone"]
+        cliente.endereco = request.POST["endereco"]
+
+        cliente.save()
+
+        return redirect("lista_clientes")
+
+    return render(
+        request,
+        "clientes/editar_cliente.html",
+        {
+            "cliente": cliente
+        }
     )

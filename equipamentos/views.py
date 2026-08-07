@@ -1,7 +1,6 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 
 from clientes.models import Cliente
-
 from .models import Equipamento
 
 
@@ -20,7 +19,10 @@ def lista_equipamentos(request):
 
 def novo_equipamento(request, cliente_id):
 
-    cliente = Cliente.objects.get(id=cliente_id)
+    cliente = get_object_or_404(
+        Cliente,
+        id=cliente_id
+    )
 
     if request.method == "POST":
 
@@ -42,8 +44,6 @@ def novo_equipamento(request, cliente_id):
             garantia=garantia,
         )
 
-        print("EQUIPAMENTO SALVO")
-
         return redirect(
             "nova_ordem",
             equipamento.id
@@ -54,5 +54,34 @@ def novo_equipamento(request, cliente_id):
         "equipamentos/novo_equipamento.html",
         {
             "cliente": cliente
+        }
+    )
+
+
+def editar_equipamento(request, equipamento_id):
+
+    equipamento = get_object_or_404(
+        Equipamento,
+        id=equipamento_id
+    )
+
+    if request.method == "POST":
+
+        equipamento.tipo = request.POST["tipo"]
+        equipamento.marca = request.POST["marca"]
+        equipamento.modelo = request.POST["modelo"]
+        equipamento.numero_serie = request.POST["numero_serie"]
+        equipamento.acessorios = request.POST["acessorios"]
+        equipamento.garantia = "garantia" in request.POST
+
+        equipamento.save()
+
+        return redirect("lista_equipamentos")
+
+    return render(
+        request,
+        "equipamentos/editar_equipamento.html",
+        {
+            "equipamento": equipamento
         }
     )

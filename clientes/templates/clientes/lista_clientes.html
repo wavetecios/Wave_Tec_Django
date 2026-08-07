@@ -1,62 +1,99 @@
-{% extends "base.html" %}
+{{% extends "base.html" %}
+
+{% block title %}
+Clientes
+{% endblock %}
 
 {% block content %}
 
-<div class="d-flex justify-content-between align-items-center mb-4">
+<div class="card shadow">
 
-    <h2>👥 Clientes Cadastrados</h2>
+    <div class="card-header bg-primary text-white">
 
-    <a href="{% url 'novo_cliente' %}" class="btn btn-success">
-    + Novo Cliente
-    </a>
+        <div class="d-flex justify-content-between align-items-center">
+
+            <h3 class="mb-0">
+                👥 Clientes Cadastrados
+            </h3>
+
+            <a
+                href="{% url 'novo_cliente' %}"
+                class="btn btn-light">
+
+                ➕ Novo Cliente
+
+            </a>
+
+        </div>
+
+    </div>
+
+    <div class="card-body">
+
+        <table class="table table-striped table-hover align-middle">
+
+            <thead class="table-primary">
+
+                <tr>
+
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Telefone</th>
+                    <th>Endereço</th>
+                    <th class="text-center">Ações</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                {% for cliente in clientes %}
+
+                <tr>
+
+                    <td>{{ cliente.id }}</td>
+
+                    <td>{{ cliente.nome }}</td>
+
+                    <td>{{ cliente.telefone }}</td>
+
+                    <td>{{ cliente.endereco }}</td>
+
+                    <td class="text-center" style="width:150px;">
+
+                        <a
+                            href="{% url 'editar_cliente' cliente.id %}"
+                            class="btn btn-warning btn-sm w-100">
+
+                            ✏️ Editar
+
+                        </a>
+
+                    </td>
+
+                </tr>
+
+                {% empty %}
+
+                <tr>
+
+                    <td colspan="5" class="text-center">
+
+                        Nenhum cliente cadastrado.
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
 
 </div>
-
-<table class="table table-striped table-hover table-bordered shadow-sm">
-
-    <thead class="table-primary">
-
-        <tr>
-
-            <th>ID</th>
-            <th>Nome</th>
-            <th>Telefone</th>
-            <th>Endereco</th>
-
-        </tr>
-
-    </thead>
-
-    <tbody>
-
-        {% for cliente in clientes %}
-
-        <tr>
-
-            <td>{{ cliente.id }}</td>
-
-            <td>{{ cliente.nome }}</td>
-
-            <td>{{ cliente.telefone }}</td>
-
-            <td>{{ cliente.endereco }}</td>
-
-        </tr>
-
-        {% empty %}
-
-        <tr>
-
-            <td colspan="4" class="text-center">
-                Nenhum cliente cadastrado.
-            </td>
-
-        </tr>
-
-        {% endfor %}
-
-    </tbody>
-
-</table>
 
 {% endblock %}
