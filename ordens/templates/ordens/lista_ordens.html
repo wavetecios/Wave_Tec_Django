@@ -132,38 +132,48 @@ Ordens de Serviço
 
                     </td>
 
-                    
+                    ==============================================
                      <td class="text-center" style="width:180px;">
 
-                    <div class="d-grid gap-2">
+                        <div class="d-grid gap-2">
 
-                        <a
-                            href="{% url 'detalhe_ordem' ordem.id %}"
-                            class="btn btn-info btn-sm">
+                            <a
+                                href="{% url 'detalhe_ordem' ordem.id %}"
+                                class="btn btn-info btn-sm">
 
-                            👁 Visualizar
+                                👁 Visualizar
 
-                        </a>
+                            </a>
 
-                        <a
-                            href="{% url 'novo_atendimento' ordem.id %}"
-                            class="btn btn-warning btn-sm">
+                            <a
+                                href="{% url 'editar_ordem' ordem.id %}"
+                                class="btn btn-success btn-sm">
 
-                            🔧 Atendimento
+                                ✏️ Editar
 
-                        </a>
+                            </a>
 
-                        <a
-                            href="{% url 'imprimir_os' ordem.id %}"
-                            class="btn btn-primary btn-sm">
+                            <a
+                                href="{% url 'novo_atendimento' ordem.id %}"
+                                class="btn btn-warning btn-sm">
 
-                            🖨 Imprimir
+                                🔧 Atendimento
 
-                        </a>
+                            </a>
 
-                    </div>
+                            <a
+                                href="{% url 'imprimir_os' ordem.id %}"
+                                class="btn btn-primary btn-sm">
 
-                </td>
+                                🖨 Imprimir
+
+                            </a>
+
+                        </div>
+
+                    </td>
+                    =================
+                
             
 
                 </tr>

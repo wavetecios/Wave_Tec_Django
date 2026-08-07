@@ -1,0 +1,185 @@
+{% extends "base.html" %}
+
+{% block title %}
+Editar Ordem de Serviço
+{% endblock %}
+
+{% block content %}
+
+<div class="card shadow">
+
+    <div class="card-header bg-warning text-dark">
+
+        <h3 class="mb-0">
+            ✏️ Editar Ordem de Serviço
+        </h3>
+
+    </div>
+
+    <div class="card-body">
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+            <div class="row">
+
+                <div class="col-md-6 mb-3">
+
+                    <label class="form-label">
+
+                        Cliente
+
+                    </label>
+
+                    <input
+                        type="text"
+                        class="form-control"
+                        value="{{ cliente.nome }}"
+                        readonly>
+
+                </div>
+
+                <div class="col-md-6 mb-3">
+
+                    <label class="form-label">
+
+                        Telefone
+
+                    </label>
+
+                    <input
+                        type="text"
+                        class="form-control"
+                        value="{{ cliente.telefone }}"
+                        readonly>
+
+                </div>
+
+            </div>
+
+            <div class="row">
+
+                <div class="col-md-4 mb-3">
+
+                    <label class="form-label">
+
+                        Equipamento
+
+                    </label>
+
+                    <input
+                        type="text"
+                        class="form-control"
+                        value="{{ equipamento.get_tipo_display }}"
+                        readonly>
+
+                </div>
+
+                <div class="col-md-4 mb-3">
+
+                    <label class="form-label">
+
+                        Marca
+
+                    </label>
+
+                    <input
+                        type="text"
+                        class="form-control"
+                        value="{{ equipamento.marca }}"
+                        readonly>
+
+                </div>
+
+                <div class="col-md-4 mb-3">
+
+                    <label class="form-label">
+
+                        Modelo
+
+                    </label>
+
+                    <input
+                        type="text"
+                        class="form-control"
+                        value="{{ equipamento.modelo }}"
+                        readonly>
+
+                </div>
+
+            </div>
+
+            <div class="mb-3">
+
+                <label class="form-label">
+
+                    Acessórios Recebidos
+
+                </label>
+
+                <textarea
+                    name="acessorios"
+                    class="form-control"
+                    rows="3">{{ ordem.acessorios }}</textarea>
+
+            </div>
+
+            <div class="mb-3">
+
+                <label class="form-label">
+
+                    Defeito Relatado pelo Cliente
+
+                </label>
+
+                <textarea
+                    name="defeito"
+                    class="form-control"
+                    rows="5"
+                    required>{{ ordem.defeito }}</textarea>
+
+            </div>
+
+            <div class="mb-4">
+
+                <label class="form-label">
+
+                    Observações Iniciais
+
+                </label>
+
+                <textarea
+                    name="observacoes"
+                    class="form-control"
+                    rows="4">{{ ordem.observacoes }}</textarea>
+
+            </div>
+
+            <div class="d-flex justify-content-between">
+
+                <a
+                    href="{% url 'lista_ordens' %}"
+                    class="btn btn-secondary">
+
+                    ← Voltar
+
+                </a>
+
+                <button
+                    type="submit"
+                    class="btn btn-success">
+
+                    💾 Salvar Alterações
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

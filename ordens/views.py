@@ -55,6 +55,34 @@ def nova_ordem(request, equipamento_id):
     )
 
 
+def editar_ordem(request, ordem_id):
+
+    ordem = get_object_or_404(
+        OrdemServico,
+        id=ordem_id
+    )
+
+    if request.method == "POST":
+
+        ordem.defeito = request.POST["defeito"]
+        ordem.acessorios = request.POST["acessorios"]
+        ordem.observacoes = request.POST["observacoes"]
+
+        ordem.save()
+
+        return redirect("lista_ordens")
+
+    return render(
+        request,
+        "ordens/editar_ordem.html",
+        {
+            "ordem": ordem,
+            "cliente": ordem.cliente,
+            "equipamento": ordem.equipamento_cadastrado,
+        }
+    )
+
+
 def detalhe_ordem(request, ordem_id):
 
     ordem = get_object_or_404(

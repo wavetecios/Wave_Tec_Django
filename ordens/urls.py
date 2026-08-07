@@ -22,6 +22,12 @@ urlpatterns = [
     ),
 
     path(
+        "editar/<int:ordem_id>/",
+        views.editar_ordem,
+        name="editar_ordem"
+    ),
+
+    path(
         "imprimir/<int:ordem_id>/",
         views.imprimir_os,
         name="imprimir_os"
