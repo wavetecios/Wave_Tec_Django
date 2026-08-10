@@ -1,0 +1,253 @@
+{% extends "base.html" %}
+
+{% block title %}
+Pesquisa Global
+{% endblock %}
+
+{% block content %}
+
+<div class="card shadow">
+
+    <div class="card-header bg-primary text-white">
+
+        <h3 class="mb-0">
+
+            🔎 Pesquisa Global
+
+        </h3>
+
+    </div>
+
+    <div class="card-body">
+
+        {% if termo %}
+
+            <div class="alert alert-info">
+
+                Resultado da pesquisa para:
+
+                <strong>
+
+                    "{{ termo }}"
+
+                </strong>
+
+            </div>
+
+        {% endif %}
+
+        <!-- CLIENTES -->
+
+        <div class="card mb-4">
+
+            <div class="card-header bg-success text-white">
+
+                👤 Clientes
+
+            </div>
+
+            <div class="card-body">
+
+                {% if clientes %}
+
+                    <table class="table table-striped">
+
+                        <thead>
+
+                            <tr>
+
+                                <th>Nome</th>
+                                <th>Telefone</th>
+                                <th>Endereço</th>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                            {% for cliente in clientes %}
+
+                            <tr>
+
+                                <td>{{ cliente.nome }}</td>
+
+                                <td>{{ cliente.telefone }}</td>
+
+                                <td>{{ cliente.endereco }}</td>
+
+                            </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                {% else %}
+
+                    <p class="text-muted">
+
+                        Nenhum cliente encontrado.
+
+                    </p>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+        <!-- EQUIPAMENTOS -->
+
+        <div class="card mb-4">
+
+            <div class="card-header bg-warning">
+
+                🖥 Equipamentos
+
+            </div>
+
+            <div class="card-body">
+
+                {% if equipamentos %}
+
+                    <table class="table table-striped">
+
+                        <thead>
+
+                            <tr>
+
+                                <th>Cliente</th>
+                                <th>Tipo</th>
+                                <th>Marca</th>
+                                <th>Modelo</th>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                            {% for equipamento in equipamentos %}
+
+                            <tr>
+
+                                <td>{{ equipamento.cliente.nome }}</td>
+
+                                <td>{{ equipamento.get_tipo_display }}</td>
+
+                                <td>{{ equipamento.marca }}</td>
+
+                                <td>{{ equipamento.modelo }}</td>
+
+                            </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                {% else %}
+
+                    <p class="text-muted">
+
+                        Nenhum equipamento encontrado.
+
+                    </p>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+        <!-- ORDENS -->
+
+        <div class="card">
+
+            <div class="card-header bg-info text-white">
+
+                📋 Ordens de Serviço
+
+            </div>
+
+            <div class="card-body">
+
+                {% if ordens %}
+
+                    <table class="table table-striped">
+
+                        <thead>
+
+                            <tr>
+
+                                <th>OS</th>
+                                <th>Cliente</th>
+                                <th>Equipamento</th>
+                                <th>Status</th>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                            {% for ordem in ordens %}
+
+                            <tr>
+
+                                <td>
+
+                                    #{{ ordem.id }}
+
+                                </td>
+
+                                <td>
+
+                                    {{ ordem.cliente.nome }}
+
+                                </td>
+
+                                <td>
+
+                                    {{ ordem.equipamento_cadastrado.marca }}
+
+                                    {{ ordem.equipamento_cadastrado.modelo }}
+
+                                </td>
+
+                                <td>
+
+                                    {{ ordem.get_status_display }}
+
+                                </td>
+
+                            </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                {% else %}
+
+                    <p class="text-muted">
+
+                        Nenhuma ordem encontrada.
+
+                    </p>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
