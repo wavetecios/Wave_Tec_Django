@@ -6,14 +6,31 @@ from equipamentos.models import Equipamento
 
 def lista_ordens(request):
 
-    ordens = OrdemServico.objects.all().order_by("-id")
+    status = request.GET.get("status")
+
+    ordens = OrdemServico.objects.all()
+
+    if status:
+
+        ordens = ordens.filter(
+            status=status
+        )
+
+    ordens = ordens.order_by("-id")
 
     return render(
+
         request,
+
         "ordens/lista_ordens.html",
+
         {
-            "ordens": ordens
+
+            "ordens": ordens,
+            "status_filtro": status,
+
         }
+
     )
 
 
@@ -46,12 +63,18 @@ def nova_ordem(request, equipamento_id):
         return redirect("lista_ordens")
 
     return render(
+
         request,
+
         "ordens/nova_ordem.html",
+
         {
+
             "cliente": cliente,
             "equipamento": equipamento,
+
         }
+
     )
 
 
@@ -73,13 +96,19 @@ def editar_ordem(request, ordem_id):
         return redirect("lista_ordens")
 
     return render(
+
         request,
+
         "ordens/editar_ordem.html",
+
         {
+
             "ordem": ordem,
             "cliente": ordem.cliente,
             "equipamento": ordem.equipamento_cadastrado,
+
         }
+
     )
 
 
@@ -97,14 +126,20 @@ def detalhe_ordem(request, ordem_id):
     )
 
     return render(
+
         request,
+
         "ordens/detalhe_ordem.html",
+
         {
+
             "ordem": ordem,
             "cliente": ordem.cliente,
             "equipamento": ordem.equipamento_cadastrado,
             "atendimento": atendimento,
+
         }
+
     )
 
 
@@ -122,12 +157,18 @@ def imprimir_os(request, ordem_id):
     )
 
     return render(
+
         request,
+
         "ordens/imprimir_os.html",
+
         {
+
             "ordem": ordem,
             "cliente": ordem.cliente,
             "equipamento": ordem.equipamento_cadastrado,
             "atendimento": atendimento,
+
         }
+
     )

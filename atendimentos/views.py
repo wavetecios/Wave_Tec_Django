@@ -20,34 +20,48 @@ def novo_atendimento(request, ordem_id):
         atendimento.diagnostico = request.POST["diagnostico"]
         atendimento.servico_executado = request.POST["servico_executado"]
         atendimento.pecas_utilizadas = request.POST["pecas_utilizadas"]
-        atendimento.valor = request.POST["valor"]
+
+        valor = request.POST.get("valor", "").strip()
+
+        atendimento.valor = valor or 0
+
         atendimento.forma_pagamento = request.POST["forma_pagamento"]
         atendimento.status = request.POST["status"]
 
         atendimento.save()
 
         mapa_status = {
+
             "EM_ANALISE": "EM_ANALISE",
+            "AGUARDANDO_PECA": "AGUARDANDO_PECA",
             "EM_REPARO": "EM_REPARO",
             "PRONTO": "PRONTO",
-            "ENTREGUE": "ENTREGUE",
-            "AGUARDANDO_PECA": "AGUARDANDO_PECA",
             "SEM_CONSERTO": "SEM_CONSERTO",
+            "ENTREGUE": "ENTREGUE",
+
         }
 
         if atendimento.status in mapa_status:
+
             ordem.status = mapa_status[atendimento.status]
+
             ordem.save()
 
         return redirect("lista_ordens")
 
     return render(
+
         request,
+
         "atendimentos/novo_atendimento.html",
+
         {
+
             "ordem": ordem,
             "atendimento": atendimento,
+
         }
+
     )
 
 
@@ -68,22 +82,46 @@ def editar_atendimento(request, ordem_id):
         atendimento.diagnostico = request.POST["diagnostico"]
         atendimento.servico_executado = request.POST["servico_executado"]
         atendimento.pecas_utilizadas = request.POST["pecas_utilizadas"]
-        atendimento.valor = request.POST["valor"]
+
+        valor = request.POST.get("valor", "").strip()
+
+        atendimento.valor = valor or 0
+
         atendimento.forma_pagamento = request.POST["forma_pagamento"]
         atendimento.status = request.POST["status"]
 
         atendimento.save()
 
-        ordem.status = atendimento.status
-        ordem.save()
+        mapa_status = {
+
+            "EM_ANALISE": "EM_ANALISE",
+            "AGUARDANDO_PECA": "AGUARDANDO_PECA",
+            "EM_REPARO": "EM_REPARO",
+            "PRONTO": "PRONTO",
+            "SEM_CONSERTO": "SEM_CONSERTO",
+            "ENTREGUE": "ENTREGUE",
+
+        }
+
+        if atendimento.status in mapa_status:
+
+            ordem.status = mapa_status[atendimento.status]
+
+            ordem.save()
 
         return redirect("lista_ordens")
 
     return render(
+
         request,
+
         "atendimentos/editar_atendimento.html",
+
         {
+
             "ordem": ordem,
             "atendimento": atendimento,
+
         }
+
     )

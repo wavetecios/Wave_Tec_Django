@@ -1,84 +1,302 @@
 {% extends "base.html" %}
 
 {% block title %}
-Wave Tec - Sistema de Assistência Técnica
+Wave Tec - Dashboard
 {% endblock %}
 
 {% block content %}
 
-<div class="text-center mb-5">
+<style>
+
+.card-dashboard{
+    transition: .25s;
+    cursor:pointer;
+}
+
+.card-dashboard:hover{
+
+    transform:translateY(-4px);
+
+    box-shadow:0 .6rem 1.2rem rgba(0,0,0,.18)!important;
+
+}
+
+.card-dashboard a{
+
+    text-decoration:none;
+
+    color:inherit;
+
+}
+
+</style>
+
+<div class="mb-4">
 
     <h1 class="display-5 fw-bold text-primary">
-        🔧 Wave Tecnologia
+
+        🔧 Wave Tec
+
     </h1>
 
-    <p class="lead">
-        Sistema de Gerenciamento de Assistência Técnica
+    <p class="lead text-secondary">
+
+        Dashboard da Assistência Técnica
+
     </p>
 
 </div>
 
-<div class="row text-center mb-5">
+
+<!-- RESUMO GERAL -->
+
+<div class="row g-4 mb-5">
 
     <div class="col-md-4">
 
-        <div class="card shadow border-primary">
+        <div class="card shadow border-primary card-dashboard">
 
-            <div class="card-body">
+            <a href="/clientes/">
 
-                <h5 class="card-title">
-                    👥 Clientes
-                </h5>
+                <div class="card-body text-center">
 
-                <h2 class="text-primary">
+                    <h5>
 
-                    {{ total_clientes }}
+                        👥 Clientes
 
-                </h2>
+                    </h5>
 
-            </div>
+                    <h1 class="text-primary">
+
+                        {{ total_clientes }}
+
+                    </h1>
+
+                </div>
+
+            </a>
 
         </div>
 
     </div>
 
+
+
     <div class="col-md-4">
 
-        <div class="card shadow border-success">
+        <div class="card shadow border-success card-dashboard">
 
-            <div class="card-body">
+            <a href="/equipamentos/">
 
-                <h5 class="card-title">
-                    🖥 Equipamentos
-                </h5>
+                <div class="card-body text-center">
 
-                <h2 class="text-success">
+                    <h5>
 
-                    {{ total_equipamentos }}
+                        🖥 Equipamentos
 
-                </h2>
+                    </h5>
 
-            </div>
+                    <h1 class="text-success">
+
+                        {{ total_equipamentos }}
+
+                    </h1>
+
+                </div>
+
+            </a>
 
         </div>
 
     </div>
 
+
+
     <div class="col-md-4">
 
-        <div class="card shadow border-danger">
+        <div class="card shadow border-danger card-dashboard">
 
-            <div class="card-body">
+            <a href="/ordens/">
 
-                <h5 class="card-title">
-                    📋 Ordens
-                </h5>
+                <div class="card-body text-center">
 
-                <h2 class="text-danger">
+                    <h5>
 
-                    {{ total_ordens }}
+                        📋 Ordens
 
-                </h2>
+                    </h5>
+
+                    <h1 class="text-danger">
+
+                        {{ total_ordens }}
+
+                    </h1>
+
+                </div>
+
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- STATUS -->
+
+<div class="card shadow mb-5">
+
+    <div class="card-header bg-dark text-white">
+
+        <h4 class="mb-0">
+
+            📊 Situação das Ordens
+
+        </h4>
+
+    </div>
+
+    <div class="card-body">
+
+        <div class="row text-center g-3">
+
+            <div class="col">
+
+                <div class="card border-danger card-dashboard">
+
+                    <a href="/ordens/?status=ABERTA">
+
+                        <div class="card-body">
+
+                            <h5>🔴</h5>
+
+                            <strong>Abertas</strong>
+
+                            <h3 class="text-danger">
+
+                                {{ ordens_abertas }}
+
+                            </h3>
+
+                        </div>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="col">
+
+                <div class="card border-warning card-dashboard">
+
+                    <a href="/ordens/?status=EM_ANALISE">
+
+                        <div class="card-body">
+
+                            <h5>🟡</h5>
+
+                            <strong>Em Análise</strong>
+
+                            <h3 class="text-warning">
+
+                                {{ ordens_analise }}
+
+                            </h3>
+
+                        </div>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="col">
+
+                <div class="card border-primary card-dashboard">
+
+                    <a href="/ordens/?status=EM_REPARO">
+
+                        <div class="card-body">
+
+                            <h5>🔵</h5>
+
+                            <strong>Em Reparo</strong>
+
+                            <h3 class="text-primary">
+
+                                {{ ordens_reparo }}
+
+                            </h3>
+
+                        </div>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="col">
+
+                <div class="card border-success card-dashboard">
+
+                    <a href="/ordens/?status=PRONTO">
+
+                        <div class="card-body">
+
+                            <h5>🟢</h5>
+
+                            <strong>Prontas</strong>
+
+                            <h3 class="text-success">
+
+                                {{ ordens_prontas }}
+
+                            </h3>
+
+                        </div>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="col">
+
+                <div class="card border-secondary card-dashboard">
+
+                    <a href="/ordens/?status=ENTREGUE">
+
+                        <div class="card-body">
+
+                            <h5>⚫</h5>
+
+                            <strong>Entregues</strong>
+
+                            <h3 class="text-secondary">
+
+                                {{ ordens_entregues }}
+
+                            </h3>
+
+                        </div>
+
+                    </a>
+
+                </div>
 
             </div>
 
@@ -88,40 +306,91 @@ Wave Tec - Sistema de Assistência Técnica
 
 </div>
 
-<div class="row g-3">
 
-    <div class="col-md-4">
 
-        <a href="/clientes/" class="btn btn-primary w-100 p-3">
+<!-- AÇÕES RÁPIDAS -->
 
-            👥 Clientes
+<div class="card shadow">
 
-        </a>
+    <div class="card-header bg-primary text-white">
 
-       
-    </div>
+        <h4 class="mb-0">
 
-    <div class="col-md-4">
+            🚀 Ações Rápidas
 
-        <a href="/equipamentos/" class="btn btn-success w-100 p-3">
-
-            🖥 Equipamentos
-
-        </a>
+        </h4>
 
     </div>
 
-    <div class="col-md-4">
+    <div class="card-body">
 
-        <a href="/ordens/" class="btn btn-danger w-100 p-3">
+        <div class="row g-3">
 
-            📋 Ordens de Serviço
+            <div class="col-md-3">
 
-        </a>
+                <a href="/clientes/novo/" class="btn btn-primary w-100 p-3">
+
+                    👤
+
+                    <br>
+
+                    Novo Cliente
+
+                </a>
+
+            </div>
+
+
+
+            <div class="col-md-3">
+
+                <a href="/equipamentos/" class="btn btn-success w-100 p-3">
+
+                    🖥
+
+                    <br>
+
+                    Equipamentos
+
+                </a>
+
+            </div>
+
+
+
+            <div class="col-md-3">
+
+                <a href="/ordens/" class="btn btn-danger w-100 p-3">
+
+                    📋
+
+                    <br>
+
+                    Ordens
+
+                </a>
+
+            </div>
+
+
+
+            <div class="col-md-3">
+
+                <a href="/pesquisa/" class="btn btn-warning w-100 p-3">
+
+                    🔎
+
+                    <br>
+
+                    Pesquisa
+
+                </a>
+
+            </div>
+
+        </div>
 
     </div>
-
-     
 
 </div>
 
