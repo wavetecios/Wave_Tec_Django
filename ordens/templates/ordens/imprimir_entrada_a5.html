@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+
+<meta charset="UTF-8">
+
+<title>Entrada OS {{ ordem.id }}</title>
+
+<style>
+
+@page{
+    size:A5 portrait;
+    margin:8mm;
+}
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+
+    margin:0;
+    padding:0;
+
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:12px;
+    color:#000;
+
+}
+
+.folha{
+
+    width:100%;
+    border:2px solid #000;
+
+}
+
+.cabecalho{
+
+    display:grid;
+    grid-template-columns:3fr 1fr;
+
+}
+
+.logo{
+
+    border-right:2px solid #000;
+    padding:10px;
+
+}
+
+.logo h1{
+
+    margin:0;
+    font-size:24px;
+
+}
+
+.logo h2{
+
+    margin:4px 0 10px;
+    font-size:13px;
+    font-weight:normal;
+
+}
+
+.logo p{
+
+    margin:2px 0;
+    font-size:11px;
+
+}
+
+.os{
+
+    text-align:center;
+
+}
+
+.os .titulo{
+
+    border-bottom:2px solid #000;
+    padding:8px;
+    font-weight:bold;
+    font-size:14px;
+
+}
+
+.os .numero{
+
+    padding-top:20px;
+    font-size:18px;
+    font-weight:bold;
+
+}
+
+.linha{
+
+    border-top:2px solid #000;
+    padding:6px 10px;
+
+}
+
+.campo{
+
+    margin-bottom:8px;
+
+}
+
+.label{
+
+    font-weight:bold;
+
+}
+
+.caixa{
+
+    border:1px solid #000;
+    min-height:28px;
+    padding:5px;
+    margin-top:3px;
+
+}
+
+.caixa-grande{
+
+    border:1px solid #000;
+    min-height:70px;
+    padding:5px;
+    margin-top:3px;
+
+}
+
+.duas-colunas{
+
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+
+}
+
+.assinaturas{
+
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:40px;
+
+    margin-top:30px;
+
+}
+
+.ass{
+
+    text-align:center;
+
+}
+
+.linha-ass{
+
+    margin-top:40px;
+    border-top:1px solid #000;
+    padding-top:5px;
+
+}
+
+@media print{
+
+button{
+
+display:none;
+
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="folha">
+
+<div class="cabecalho">
+
+<div class="logo">
+
+<h1>WAVE TECNOLOGIA</h1>
+
+<h2>INSTALAÇÃO E MANUTENÇÃO</h2>
+
+<p>Assistência Técnica Especializada</p>
+
+<p>Ilhéus - Bahia</p>
+
+<p>(73) 99102-7678</p>
+
+</div>
+
+<div class="os">
+
+<div class="titulo">
+
+ORDEM DE SERVIÇO
+
+</div>
+
+<div class="numero">
+
+Nº {{ ordem.id }}
+
+</div>
+
+</div>
+
+</div>
+
+<div class="linha">
+
+<div class="duas-colunas">
+
+<div class="campo">
+
+<div class="label">
+
+Data
+
+</div>
+
+<div class="caixa">
+
+{{ ordem.data_abertura|date:"d/m/Y" }}
+
+</div>
+
+</div>
+
+<div class="campo">
+
+<div class="label">
+
+Telefone
+
+</div>
+
+<div class="caixa">
+
+{{ cliente.telefone }}
+
+</div>
+
+</div>
+
+</div>
+
+<div class="campo">
+
+<div class="label">
+
+Nome
+
+</div>
+
+<div class="caixa">
+
+{{ cliente.nome }}
+
+</div>
+
+</div>
+
+<div class="campo">
+
+<div class="label">
+
+Endereço
+
+</div>
+
+<div class="caixa">
+
+{{ cliente.endereco }}
+
+</div>
+
+</div>
+
+</div>
+
+<div class="linha">
+
+<div class="campo">
+
+<div class="label">
+
+Equipamento
+
+</div>
+
+<div class="caixa">
+
+{{ equipamento.get_tipo_display }}
+-
+{{ equipamento.marca }}
+{{ equipamento.modelo }}
+
+</div>
+
+</div>
+
+<div class="campo">
+
+<div class="label">
+
+Número de Série
+
+</div>
+
+<div class="caixa">
+
+{{ equipamento.numero_serie }}
+
+</div>
+
+</div>
+
+</div>
+
+<div class="linha">
+
+<div class="campo">
+
+<div class="label">
+
+Acessórios Recebidos
+
+</div>
+
+<div class="caixa">
+
+{{ equipamento.acessorios }}
+
+</div>
+
+</div>
+
+</div>
+
+<div class="linha">
+
+<div class="campo">
+
+<div class="label">
+
+Defeito Informado
+
+</div>
+
+<div class="caixa-grande">
+
+{{ ordem.defeito }}
+
+</div>
+
+</div>
+
+</div>
+
+<div class="linha">
+
+<div class="assinaturas">
+
+<div class="ass">
+
+<div class="linha-ass">
+
+Cliente
+
+</div>
+
+</div>
+
+<div class="ass">
+
+<div class="linha-ass">
+
+Wave Tecnologia
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<br>
+
+<button onclick="window.print()">
+
+🖨 Imprimir
+
+</button>
+
+</body>
+
+</html>

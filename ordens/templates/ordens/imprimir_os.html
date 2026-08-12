@@ -35,12 +35,34 @@ hr{
     margin-top:80px;
 }
 
-@media print{
-
-.btn{
-display:none;
+@page {
+    size: A5 portrait;
+    margin: 10mm;
 }
 
+@media print{
+    body {
+        margin: 0;
+        font-size: 13px;
+        line-height: 1.35;
+    }
+
+    .container {
+        max-width: 100%;
+        width: 100%;
+    }
+
+    .titulo {
+        margin-top: 12px;
+    }
+
+    .assinatura {
+        margin-top: 40px;
+    }
+
+    .btn{
+        display:none;
+    }
 }
 
 </style>

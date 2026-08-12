@@ -172,3 +172,22 @@ def imprimir_os(request, ordem_id):
         }
 
     )
+
+
+def imprimir_entrada(request, ordem_id):
+
+    ordem = get_object_or_404(
+        OrdemServico,
+        id=ordem_id
+    )
+
+    return render(
+        request,
+        "ordens/imprimir_entrada_a5.html",
+        {
+            "ordem": ordem,
+            "cliente": ordem.cliente,
+            "equipamento": ordem.equipamento_cadastrado,
+        }
+    )
+

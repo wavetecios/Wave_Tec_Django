@@ -16,12 +16,6 @@ urlpatterns = [
     ),
 
     path(
-        "<int:ordem_id>/",
-        views.detalhe_ordem,
-        name="detalhe_ordem"
-    ),
-
-    path(
         "editar/<int:ordem_id>/",
         views.editar_ordem,
         name="editar_ordem"
@@ -31,6 +25,19 @@ urlpatterns = [
         "imprimir/<int:ordem_id>/",
         views.imprimir_os,
         name="imprimir_os"
+    ),
+
+    path(
+    "entrada/<int:ordem_id>/",
+    views.imprimir_entrada,
+    name="imprimir_entrada"
+    ), 
+
+    # SEMPRE deixe a rota genérica por último
+    path(
+        "<int:ordem_id>/",
+        views.detalhe_ordem,
+        name="detalhe_ordem"
     ),
 
 ]
