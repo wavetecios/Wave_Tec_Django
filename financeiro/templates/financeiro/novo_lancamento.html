@@ -7,9 +7,7 @@ Novo Lançamento
 {% block content %}
 
 <h2 class="mb-4">
-
     💰 Novo Lançamento
-
 </h2>
 
 <form method="POST">
@@ -19,9 +17,7 @@ Novo Lançamento
     <div class="mb-3">
 
         <label class="form-label">
-
             Tipo
-
         </label>
 
         <select
@@ -30,15 +26,11 @@ Novo Lançamento
             required>
 
             <option value="RECEITA">
-
                 Receita
-
             </option>
 
             <option value="DESPESA">
-
                 Despesa
-
             </option>
 
         </select>
@@ -48,9 +40,46 @@ Novo Lançamento
     <div class="mb-3">
 
         <label class="form-label">
+            Categoria
+        </label>
 
+        <select
+            name="categoria"
+            class="form-select"
+            required>
+
+            <option value="SERVICOS">
+                Serviços
+            </option>
+
+            <option value="PECAS">
+                Peças
+            </option>
+
+            <option value="ENERGIA">
+                Energia
+            </option>
+
+            <option value="ALUGUEL">
+                Aluguel
+            </option>
+
+            <option value="MATERIAL">
+                Material
+            </option>
+
+            <option value="OUTROS">
+                Outros
+            </option>
+
+        </select>
+
+    </div>
+
+    <div class="mb-3">
+
+        <label class="form-label">
             Descrição
-
         </label>
 
         <input
@@ -64,9 +93,7 @@ Novo Lançamento
     <div class="mb-3">
 
         <label class="form-label">
-
             Valor
-
         </label>
 
         <input
@@ -81,9 +108,7 @@ Novo Lançamento
     <div class="mb-3">
 
         <label class="form-label">
-
             Forma de Pagamento
-
         </label>
 
         <select
@@ -91,27 +116,19 @@ Novo Lançamento
             class="form-select">
 
             <option value="DINHEIRO">
-
                 Dinheiro
-
             </option>
 
             <option value="PIX">
-
                 PIX
-
             </option>
 
             <option value="CARTAO">
-
                 Cartão
-
             </option>
 
             <option value="TRANSFERENCIA">
-
                 Transferência
-
             </option>
 
         </select>
@@ -121,9 +138,7 @@ Novo Lançamento
     <div class="mb-3">
 
         <label class="form-label">
-
             Observações
-
         </label>
 
         <textarea

@@ -1,4 +1,3 @@
-
 from django.db import models
 
 from ordens.models import OrdemServico
@@ -10,6 +9,17 @@ class Lancamento(models.Model):
 
         ("RECEITA", "Receita"),
         ("DESPESA", "Despesa"),
+
+    ]
+
+    CATEGORIA_CHOICES = [
+
+        ("SERVICOS", "Serviços"),
+        ("PECAS", "Peças"),
+        ("ENERGIA", "Energia"),
+        ("ALUGUEL", "Aluguel"),
+        ("MATERIAL", "Material"),
+        ("OUTROS", "Outros"),
 
     ]
 
@@ -25,6 +35,12 @@ class Lancamento(models.Model):
     tipo = models.CharField(
         max_length=10,
         choices=TIPO_CHOICES
+    )
+
+    categoria = models.CharField(
+        max_length=20,
+        choices=CATEGORIA_CHOICES,
+        default="OUTROS"
     )
 
     descricao = models.CharField(
@@ -71,4 +87,8 @@ class Lancamento(models.Model):
 
     def __str__(self):
 
-        return f"{self.tipo} - {self.descricao} - R$ {self.valor}"
+        return (
+            f"{self.tipo} - "
+            f"{self.descricao} - "
+            f"R$ {self.valor}"
+        )

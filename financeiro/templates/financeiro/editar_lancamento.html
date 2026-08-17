@@ -7,9 +7,7 @@ Editar Lançamento
 {% block content %}
 
 <h2 class="mb-4">
-
     ✏️ Editar Lançamento
-
 </h2>
 
 <form method="POST">
@@ -19,27 +17,24 @@ Editar Lançamento
     <div class="mb-3">
 
         <label class="form-label">
-
             Tipo
-
         </label>
 
         <select
             name="tipo"
-            class="form-select">
+            class="form-select"
+            required>
 
-            <option value="RECEITA"
-            {% if lancamento.tipo == "RECEITA" %}selected{% endif %}>
-
+            <option
+                value="RECEITA"
+                {% if lancamento.tipo == "RECEITA" %}selected{% endif %}>
                 Receita
-
             </option>
 
-            <option value="DESPESA"
-            {% if lancamento.tipo == "DESPESA" %}selected{% endif %}>
-
+            <option
+                value="DESPESA"
+                {% if lancamento.tipo == "DESPESA" %}selected{% endif %}>
                 Despesa
-
             </option>
 
         </select>
@@ -49,9 +44,58 @@ Editar Lançamento
     <div class="mb-3">
 
         <label class="form-label">
+            Categoria
+        </label>
 
+        <select
+            name="categoria"
+            class="form-select"
+            required>
+
+            <option
+                value="SERVICOS"
+                {% if lancamento.categoria == "SERVICOS" %}selected{% endif %}>
+                Serviços
+            </option>
+
+            <option
+                value="PECAS"
+                {% if lancamento.categoria == "PECAS" %}selected{% endif %}>
+                Peças
+            </option>
+
+            <option
+                value="ENERGIA"
+                {% if lancamento.categoria == "ENERGIA" %}selected{% endif %}>
+                Energia
+            </option>
+
+            <option
+                value="ALUGUEL"
+                {% if lancamento.categoria == "ALUGUEL" %}selected{% endif %}>
+                Aluguel
+            </option>
+
+            <option
+                value="MATERIAL"
+                {% if lancamento.categoria == "MATERIAL" %}selected{% endif %}>
+                Material
+            </option>
+
+            <option
+                value="OUTROS"
+                {% if lancamento.categoria == "OUTROS" %}selected{% endif %}>
+                Outros
+            </option>
+
+        </select>
+
+    </div>
+
+    <div class="mb-3">
+
+        <label class="form-label">
             Descrição
-
         </label>
 
         <input
@@ -66,9 +110,7 @@ Editar Lançamento
     <div class="mb-3">
 
         <label class="form-label">
-
             Valor
-
         </label>
 
         <input
@@ -84,32 +126,34 @@ Editar Lançamento
     <div class="mb-3">
 
         <label class="form-label">
-
             Forma de Pagamento
-
         </label>
 
         <select
             name="forma_pagamento"
             class="form-select">
 
-            <option value="DINHEIRO"
-            {% if lancamento.forma_pagamento == "DINHEIRO" %}selected{% endif %}>
+            <option
+                value="DINHEIRO"
+                {% if lancamento.forma_pagamento == "DINHEIRO" %}selected{% endif %}>
                 Dinheiro
             </option>
 
-            <option value="PIX"
-            {% if lancamento.forma_pagamento == "PIX" %}selected{% endif %}>
+            <option
+                value="PIX"
+                {% if lancamento.forma_pagamento == "PIX" %}selected{% endif %}>
                 PIX
             </option>
 
-            <option value="CARTAO"
-            {% if lancamento.forma_pagamento == "CARTAO" %}selected{% endif %}>
+            <option
+                value="CARTAO"
+                {% if lancamento.forma_pagamento == "CARTAO" %}selected{% endif %}>
                 Cartão
             </option>
 
-            <option value="TRANSFERENCIA"
-            {% if lancamento.forma_pagamento == "TRANSFERENCIA" %}selected{% endif %}>
+            <option
+                value="TRANSFERENCIA"
+                {% if lancamento.forma_pagamento == "TRANSFERENCIA" %}selected{% endif %}>
                 Transferência
             </option>
 
@@ -120,19 +164,18 @@ Editar Lançamento
     <div class="mb-3">
 
         <label class="form-label">
-
             Observações
-
         </label>
 
         <textarea
             name="observacoes"
-            class="form-control"
-            rows="4">{{ lancamento.observacoes }}</textarea>
+            rows="4"
+            class="form-control">{{ lancamento.observacoes }}</textarea>
 
     </div>
 
     <button
+        type="submit"
         class="btn btn-success">
 
         💾 Salvar Alterações

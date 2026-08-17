@@ -31,6 +31,7 @@ Wave Tec - Dashboard
 
 </style>
 
+
 <div class="mb-4">
 
     <h1 class="display-5 fw-bold text-primary">
@@ -51,6 +52,7 @@ Wave Tec - Dashboard
 <!-- RESUMO GERAL -->
 
 <div class="row g-4 mb-5">
+
 
     <div class="col-md-4">
 
@@ -140,6 +142,7 @@ Wave Tec - Dashboard
 
     </div>
 
+
 </div>
 
 
@@ -147,6 +150,7 @@ Wave Tec - Dashboard
 <!-- STATUS -->
 
 <div class="card shadow mb-5">
+
 
     <div class="card-header bg-dark text-white">
 
@@ -158,9 +162,12 @@ Wave Tec - Dashboard
 
     </div>
 
+
     <div class="card-body">
 
+
         <div class="row text-center g-3">
+
 
             <div class="col">
 
@@ -300,6 +307,131 @@ Wave Tec - Dashboard
 
             </div>
 
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- FINANCEIRO -->
+
+<div class="card shadow mb-5">
+
+
+    <div class="card-header bg-success text-white">
+
+        <div class="d-flex justify-content-between align-items-center">
+
+            <h4 class="mb-0">
+
+                💰 Financeiro
+
+            </h4>
+
+
+            <a
+                href="/financeiro/"
+                class="btn btn-light btn-sm">
+
+                Ver Financeiro
+
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <div class="card-body">
+
+
+        <div class="row g-4 text-center">
+
+
+            <!-- RECEITAS -->
+
+            <div class="col-md-4">
+
+                <div class="card border-success h-100">
+
+                    <div class="card-body">
+
+                        <h6 class="text-success">
+
+                            💚 Receitas do mês
+
+                        </h6>
+
+                        <h2 class="text-success">
+
+                            R$ {{ receitas_mes|floatformat:2 }}
+
+                        </h2>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- DESPESAS -->
+
+            <div class="col-md-4">
+
+                <div class="card border-danger h-100">
+
+                    <div class="card-body">
+
+                        <h6 class="text-danger">
+
+                            ❤️ Despesas do mês
+
+                        </h6>
+
+                        <h2 class="text-danger">
+
+                            R$ {{ despesas_mes|floatformat:2 }}
+
+                        </h2>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- SALDO -->
+
+            <div class="col-md-4">
+
+                <div class="card border-primary h-100">
+
+                    <div class="card-body">
+
+                        <h6 class="text-primary">
+
+                            💙 Saldo do mês
+
+                        </h6>
+
+                        <h2 class="text-primary">
+
+                            R$ {{ saldo_mes|floatformat:2 }}
+
+                        </h2>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
         </div>
 
     </div>
@@ -312,6 +444,7 @@ Wave Tec - Dashboard
 
 <div class="card shadow">
 
+
     <div class="card-header bg-primary text-white">
 
         <h4 class="mb-0">
@@ -322,13 +455,18 @@ Wave Tec - Dashboard
 
     </div>
 
+
     <div class="card-body">
+
 
         <div class="row g-3">
 
+
             <div class="col-md-3">
 
-                <a href="/clientes/novo/" class="btn btn-primary w-100 p-3">
+                <a
+                    href="/clientes/novo/"
+                    class="btn btn-primary w-100 p-3">
 
                     👤
 
@@ -344,7 +482,9 @@ Wave Tec - Dashboard
 
             <div class="col-md-3">
 
-                <a href="/equipamentos/" class="btn btn-success w-100 p-3">
+                <a
+                    href="/equipamentos/"
+                    class="btn btn-success w-100 p-3">
 
                     🖥
 
@@ -360,7 +500,9 @@ Wave Tec - Dashboard
 
             <div class="col-md-3">
 
-                <a href="/ordens/" class="btn btn-danger w-100 p-3">
+                <a
+                    href="/ordens/"
+                    class="btn btn-danger w-100 p-3">
 
                     📋
 
@@ -376,7 +518,9 @@ Wave Tec - Dashboard
 
             <div class="col-md-3">
 
-                <a href="/pesquisa/" class="btn btn-warning w-100 p-3">
+                <a
+                    href="/pesquisa/"
+                    class="btn btn-warning w-100 p-3">
 
                     🔎
 
@@ -388,10 +532,12 @@ Wave Tec - Dashboard
 
             </div>
 
+
         </div>
 
     </div>
 
 </div>
+
 
 {% endblock %}

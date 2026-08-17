@@ -113,22 +113,18 @@ Financeiro
 
 <div class="row mb-4">
 
-    <div class="col-md-4">
+    <div class="col-md-4 mb-3">
 
-        <div class="card border-success shadow">
+        <div class="card shadow-sm border-success">
 
             <div class="card-body">
 
-                <h5 class="text-success">
-
-                    Receitas
-
-                </h5>
+                <h6 class="text-success">
+                    💚 Receitas
+                </h6>
 
                 <h3>
-
-                    R$ {{ total_receitas }}
-
+                    R$ {{ total_receitas|floatformat:2 }}
                 </h3>
 
             </div>
@@ -137,22 +133,19 @@ Financeiro
 
     </div>
 
-    <div class="col-md-4">
 
-        <div class="card border-danger shadow">
+    <div class="col-md-4 mb-3">
+
+        <div class="card shadow-sm border-danger">
 
             <div class="card-body">
 
-                <h5 class="text-danger">
-
-                    Despesas
-
-                </h5>
+                <h6 class="text-danger">
+                    ❤️ Despesas
+                </h6>
 
                 <h3>
-
-                    R$ {{ total_despesas }}
-
+                    R$ {{ total_despesas|floatformat:2 }}
                 </h3>
 
             </div>
@@ -161,27 +154,171 @@ Financeiro
 
     </div>
 
-    <div class="col-md-4">
 
-        <div class="card border-primary shadow">
+    <div class="col-md-4 mb-3">
+
+        <div class="card shadow-sm border-primary">
 
             <div class="card-body">
 
-                <h5 class="text-primary">
-
-                    Saldo
-
-                </h5>
+                <h6 class="text-primary">
+                    💙 Saldo
+                </h6>
 
                 <h3>
-
-                    R$ {{ saldo }}
-
+                    R$ {{ saldo|floatformat:2 }}
                 </h3>
 
             </div>
 
         </div>
+
+    </div>
+
+</div>
+
+<div class="row mb-4">
+
+    <div class="col-md-6 mb-3">
+
+        <div class="card shadow-sm">
+
+            <div class="card-header bg-success text-white">
+
+                <strong>
+                    📈 Receitas por Categoria
+                </strong>
+
+            </div>
+
+            <div class="card-body">
+
+                {% if receitas_categoria %}
+
+                    {% for item in receitas_categoria %}
+
+                        <div class="d-flex justify-content-between border-bottom py-2">
+
+                            <span>
+                                {{ item.categoria_nome }}
+                            </span>
+
+                            <strong>
+                                R$ {{ item.total|floatformat:2 }}
+                            </strong>
+
+                        </div>
+
+                    {% endfor %}
+
+                {% else %}
+
+                    <p class="text-muted mb-0">
+                        Nenhuma receita no período.
+                    </p>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="col-md-6 mb-3">
+
+        <div class="card shadow-sm">
+
+            <div class="card-header bg-danger text-white">
+
+                <strong>
+                    📉 Despesas por Categoria
+                </strong>
+
+            </div>
+
+            <div class="card-body">
+
+                {% if despesas_categoria %}
+
+                    {% for item in despesas_categoria %}
+
+                        <div class="d-flex justify-content-between border-bottom py-2">
+
+                            <span>
+                                {{ item.categoria_nome }}
+                            </span>
+
+                            <strong>
+                                R$ {{ item.total|floatformat:2 }}
+                            </strong>
+
+                        </div>
+
+                    {% endfor %}
+
+                {% else %}
+
+                    <p class="text-muted mb-0">
+                        Nenhuma despesa no período.
+                    </p>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="card shadow-sm mb-4">
+
+    <div class="card-header">
+
+        <strong>
+            💳 Receitas por Forma de Pagamento
+        </strong>
+
+    </div>
+
+    <div class="card-body">
+
+        {% if formas_pagamento %}
+
+            <div class="row">
+
+                {% for item in formas_pagamento %}
+
+                    <div class="col-md-3 mb-2">
+
+                        <div class="border rounded p-3">
+
+                            <div class="text-muted small">
+                                {{ item.forma_pagamento }}
+                            </div>
+
+                            <strong>
+                                R$ {{ item.total|floatformat:2 }}
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+        {% else %}
+
+            <p class="text-muted mb-0">
+                Nenhuma receita no período.
+            </p>
+
+        {% endif %}
 
     </div>
 
