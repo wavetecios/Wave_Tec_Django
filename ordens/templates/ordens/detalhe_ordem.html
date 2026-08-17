@@ -24,7 +24,11 @@ Ordem de Serviço #{{ ordem.id }}
 
     </div>
 
+
     <div class="card-body">
+
+
+        <!-- CLIENTE E EQUIPAMENTO -->
 
         <div class="row">
 
@@ -52,6 +56,7 @@ Ordem de Serviço #{{ ordem.id }}
                 </p>
 
             </div>
+
 
             <div class="col-md-6">
 
@@ -85,7 +90,11 @@ Ordem de Serviço #{{ ordem.id }}
 
         </div>
 
+
         <hr>
+
+
+        <!-- ORDEM DE SERVIÇO -->
 
         <h5 class="text-danger">
             📄 Ordem de Serviço
@@ -101,7 +110,9 @@ Ordem de Serviço #{{ ordem.id }}
             {{ ordem.defeito }}
         </div>
 
+
         <br>
+
 
         <p>
             <strong>Acessórios Recebidos</strong>
@@ -111,7 +122,9 @@ Ordem de Serviço #{{ ordem.id }}
             {{ equipamento.acessorios }}
         </div>
 
+
         <br>
+
 
         <p>
             <strong>Observações</strong>
@@ -121,7 +134,11 @@ Ordem de Serviço #{{ ordem.id }}
             {{ ordem.observacoes }}
         </div>
 
+
         <hr>
+
+
+        <!-- ATENDIMENTO -->
 
         <h5 class="text-warning">
             🔧 Atendimento Técnico
@@ -129,7 +146,9 @@ Ordem de Serviço #{{ ordem.id }}
 
         <br>
 
+
         {% if atendimento %}
+
 
             <p>
                 <strong>Diagnóstico</strong>
@@ -139,7 +158,9 @@ Ordem de Serviço #{{ ordem.id }}
                 {{ atendimento.diagnostico }}
             </div>
 
+
             <br>
+
 
             <p>
                 <strong>Serviço Executado</strong>
@@ -149,7 +170,9 @@ Ordem de Serviço #{{ ordem.id }}
                 {{ atendimento.servico_executado }}
             </div>
 
+
             <br>
+
 
             <p>
                 <strong>Peças Utilizadas</strong>
@@ -159,7 +182,9 @@ Ordem de Serviço #{{ ordem.id }}
                 {{ atendimento.pecas_utilizadas }}
             </div>
 
+
             <br>
+
 
             <div class="row">
 
@@ -173,97 +198,124 @@ Ordem de Serviço #{{ ordem.id }}
 
                 </div>
 
+
                 <div class="col-md-6">
 
                     <strong>Forma de Pagamento</strong>
 
                     <p>
-                        {{ atendimento.forma_pagamento }}
+                        {{ atendimento.get_forma_pagamento_display }}
                     </p>
 
                 </div>
 
             </div>
 
+
         {% else %}
 
+
             <div class="alert alert-warning">
-                Nenhum atendimento realizado.
+
+                ⚠️ Nenhum atendimento realizado.
+
             </div>
+
 
         {% endif %}
 
+
         <hr>
 
-        <div class="d-flex justify-content-between">
 
-            <a
-                href="{% url 'lista_ordens' %}"
-                class="btn btn-secondary">
+        <!-- AÇÕES DA ORDEM -->
 
-                ← Voltar
+        <div class="card border-0 bg-light">
 
-            </a>
+            <div class="card-body">
 
-            <div class="d-flex gap-2 flex-wrap">
+                <h5 class="mb-3">
 
-                <a
-                    href="{% url 'editar_ordem' ordem.id %}"
-                    class="btn btn-warning">
+                    🚀 Ações da Ordem
 
-                    ✏ Editar OS
+                </h5>
 
-                </a>
 
-                <a
-                    href="{% url 'novo_atendimento' ordem.id %}"
-                    class="btn btn-primary">
+                <div class="d-flex gap-2 flex-wrap">
 
-                    🔧 Atendimento
 
-                </a>
+                    <a
+                        href="{% url 'editar_ordem' ordem.id %}"
+                        class="btn btn-warning">
 
-                {% if atendimento %}
+                        ✏️ Editar OS
 
-                <a
-                    href="{% url 'editar_atendimento' ordem.id %}"
-                    class="btn btn-success">
+                    </a>
 
-                    ✏ Editar Atendimento
 
-                </a>
+                    {% if atendimento %}
 
-                {% endif %}
+                    <a
+                        href="{% url 'editar_atendimento' ordem.id %}"
+                        class="btn btn-success">
 
-                <a
-                    href="{% url 'imprimir_entrada' ordem.id %}"
-                    class="btn btn-info">
+                        ✏️ Editar Atendimento
 
-                    🧾 Entrada A5
+                    </a>
 
-                </a>
+                    {% else %}
 
-                <a
-                    href="{% url 'imprimir_os' ordem.id %}"
-                    class="btn btn-dark">
+                    <a
+                        href="{% url 'novo_atendimento' ordem.id %}"
+                        class="btn btn-primary">
 
-                    📄 Relatório A4
+                        🔧 Atendimento
 
-                </a>
+                    </a>
+
+                    {% endif %}
+
+
+                    <a
+                        href="{% url 'imprimir_entrada' ordem.id %}"
+                        class="btn btn-info">
+
+                        🧾 Entrada A5
+
+                    </a>
+
+
+                    <a
+                        href="{% url 'imprimir_os' ordem.id %}"
+                        class="btn btn-dark">
+
+                        📄 Relatório A4
+
+                    </a>
+
+
+                </div>
 
             </div>
 
         </div>
 
+
+        <div class="mt-4">
+
+            <a
+                href="{% url 'lista_ordens' %}"
+                class="btn btn-secondary">
+
+                ← Voltar para Ordens
+
+            </a>
+
+        </div>
+
+
     </div>
 
 </div>
-
-<a href="{% url 'imprimir_entrada' ordem.id %}"
-   class="btn btn-info">
-
-    📄 Ficha de Entrada
-
-</a>
 
 {% endblock %}
