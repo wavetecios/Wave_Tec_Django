@@ -34,6 +34,11 @@ urlpatterns = [
     ),
 
     path(
+        "financeiro/",
+        include("financeiro.urls")
+    ),
+
+    path(
         "pesquisa/",
         include("pesquisa.urls")
     ),

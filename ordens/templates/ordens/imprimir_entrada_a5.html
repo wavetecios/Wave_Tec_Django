@@ -5,26 +5,25 @@
 
 <meta charset="UTF-8">
 
-<title>Entrada OS {{ ordem.id }}</title>
+<title>Ficha de Entrada - OS {{ ordem.id }}</title>
 
 <style>
 
 @page{
-    size:A5 portrait;
-    margin:8mm;
+    size:A5;
+    margin:5mm;
 }
 
 *{
+    margin:0;
+    padding:0;
     box-sizing:border-box;
 }
 
 body{
 
-    margin:0;
-    padding:0;
-
     font-family:Arial, Helvetica, sans-serif;
-    font-size:12px;
+    font-size:10px;
     color:#000;
 
 }
@@ -32,145 +31,231 @@ body{
 .folha{
 
     width:100%;
+    height:100%;
+
+}
+
+.borda{
+
     border:2px solid #000;
+    padding:8px;
 
 }
 
-.cabecalho{
+/*======================
+    CABEÇALHO
+=======================*/
 
-    display:grid;
-    grid-template-columns:3fr 1fr;
+.topo{
 
-}
-
-.logo{
-
-    border-right:2px solid #000;
-    padding:10px;
-
-}
-
-.logo h1{
-
-    margin:0;
-    font-size:24px;
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    margin-bottom:8px;
 
 }
 
-.logo h2{
+.empresa{
 
-    margin:4px 0 10px;
-    font-size:13px;
+    width:70%;
+
+}
+
+.empresa h1{
+
+    font-size:22px;
+    letter-spacing:1px;
+    margin-bottom:2px;
+
+}
+
+.empresa h2{
+
+    font-size:12px;
     font-weight:normal;
+    margin-bottom:2px;
 
 }
 
-.logo p{
+.empresa p{
 
-    margin:2px 0;
-    font-size:11px;
+    font-size:10px;
+    line-height:1.2;
 
 }
 
 .os{
 
+    width:27%;
+    border:2px solid #000;
     text-align:center;
 
 }
 
 .os .titulo{
 
+    background:#efefef;
     border-bottom:2px solid #000;
-    padding:8px;
+    padding:4px;
     font-weight:bold;
-    font-size:14px;
+    font-size:12px;
 
 }
 
 .os .numero{
 
-    padding-top:20px;
-    font-size:18px;
+    font-size:20px;
     font-weight:bold;
+    padding:12px 0;
+
+}
+
+.os .data{
+
+    border-top:2px solid #000;
+    padding:5px;
+    font-size:10px;
+
+}
+
+/*======================
+    CAMPOS
+=======================*/
+
+.titulo{
+
+    background:#efefef;
+    border:1px solid #000;
+    padding:2px 4px;
+    font-weight:bold;
+    margin-top:2px;
 
 }
 
 .linha{
 
-    border-top:2px solid #000;
-    padding:6px 10px;
+    display:flex;
+    width:100%;
+
+}
+
+.col{
+
+    flex:1;
+
+}
+
+.col-30{
+
+    width:30%;
+
+}
+
+.col-40{
+
+    width:40%;
+
+}
+
+.col-60{
+
+    width:60%;
+
+}
+
+.col-70{
+
+    width:70%;
 
 }
 
 .campo{
 
-    margin-bottom:8px;
+    border-left:1px solid #000;
+    border-right:1px solid #000;
+    border-bottom:1px solid #000;
 
 }
 
 .label{
 
+    background:#f8f8f8;
+    border-bottom:1px solid #000;
+    font-size:9px;
+    padding:2px 4px;
     font-weight:bold;
 
 }
 
-.caixa{
+.valor{
 
-    border:1px solid #000;
-    min-height:28px;
-    padding:5px;
-    margin-top:3px;
+    padding:3px;
+    min-height:24px;
 
 }
 
 .caixa-grande{
 
+    min-height:38px;
+    padding:6px;
+
+}
+
+.caixa-media{
+
+    min-height:18px;
+    padding:6px;
+
+}
+
+/*======================
+    TERMO
+=======================*/
+
+.termo{
+
     border:1px solid #000;
-    min-height:70px;
-    padding:5px;
-    margin-top:3px;
+    padding:4px;
+    font-size:8px;
+    line-height:1.2;
+    text-align:justify;
 
 }
 
-.duas-colunas{
-
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:10px;
-
-}
+/*======================
+    ASSINATURAS
+=======================*/
 
 .assinaturas{
 
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:40px;
-
-    margin-top:30px;
+    margin-top:5px;
+    display:flex;
+    justify-content:space-between;
 
 }
 
 .ass{
 
+    width:42%;
     text-align:center;
 
 }
 
 .linha-ass{
 
-    margin-top:40px;
     border-top:1px solid #000;
-    padding-top:5px;
+    margin-top:14px;
+    padding-top:3px;
 
 }
 
 @media print{
 
-button{
+    .no-print{
 
-display:none;
+        display:none;
 
-}
+    }
 
 }
 
@@ -182,77 +267,71 @@ display:none;
 
 <div class="folha">
 
-<div class="cabecalho">
+<div class="borda">
 
-<div class="logo">
+<div class="topo">
 
-<h1>WAVE TECNOLOGIA</h1>
+<div style="border:2px solid #000;padding:6px;margin-bottom:6px;">
 
-<h2>INSTALAÇÃO E MANUTENÇÃO</h2>
+    <table style="width:100%;border-collapse:collapse;">
 
-<p>Assistência Técnica Especializada</p>
+        <tr>
 
-<p>Ilhéus - Bahia</p>
+            <td style="width:70%;vertical-align:top;">
 
-<p>(73) 99102-7678</p>
+                <h2>WAVE TECNOLOGIA</h2>
+
+                <div class="subtitulo">
+                    Assistência Técnica Especializada
+                </div>
+
+                <div class="info">
+                    Ilhéus - BA
+                </div>
+
+                <div class="info">
+                    (73) 99102-7678
+                </div>
+
+            </td>
+
+            <td style="width:30%;text-align:right;vertical-align:top;">
+
+                <div style="text-align:right;">
+
+                    <strong>
+
+                        OS Nº {{ ordem.id }}
+
+                    </strong>
+
+                    <br>
+
+                    Entrada
+
+                    {{ ordem.data_abertura|date:"d/m/Y" }}
+
+                </div>
+
+            </td>
+
+        </tr>
+
+    </table>
 
 </div>
 
-<div class="os">
+</div>
 
 <div class="titulo">
 
-ORDEM DE SERVIÇO
-
-</div>
-
-<div class="numero">
-
-Nº {{ ordem.id }}
-
-</div>
-
-</div>
+DADOS DO CLIENTE
 
 </div>
 
 <div class="linha">
 
-<div class="duas-colunas">
-
-<div class="campo">
-
-<div class="label">
-
-Data
-
-</div>
-
-<div class="caixa">
-
-{{ ordem.data_abertura|date:"d/m/Y" }}
-
-</div>
-
-</div>
-
-<div class="campo">
-
-<div class="label">
-
-Telefone
-
-</div>
-
-<div class="caixa">
-
-{{ cliente.telefone }}
-
-</div>
-
-</div>
-
-</div>
+<div class="col-70">
 
 <div class="campo">
 
@@ -262,9 +341,33 @@ Nome
 
 </div>
 
-<div class="caixa">
+<div class="valor">
 
 {{ cliente.nome }}
+
+</div>
+
+</div>
+
+</div>
+
+<div class="col-30">
+
+<div class="campo">
+
+<div class="label">
+
+Telefone
+
+</div>
+
+<div class="valor">
+
+{{ cliente.telefone }}
+
+</div>
+
+</div>
 
 </div>
 
@@ -278,7 +381,7 @@ Endereço
 
 </div>
 
-<div class="caixa">
+<div class="valor">
 
 {{ cliente.endereco }}
 
@@ -286,124 +389,193 @@ Endereço
 
 </div>
 
-</div>
+<div class="titulo">
 
-<div class="linha">
-
-<div class="campo">
-
-<div class="label">
-
-Equipamento
-
-</div>
-
-<div class="caixa">
-
-{{ equipamento.get_tipo_display }}
--
-{{ equipamento.marca }}
-{{ equipamento.modelo }}
-
-</div>
-
-</div>
-
-<div class="campo">
-
-<div class="label">
-
-Número de Série
-
-</div>
-
-<div class="caixa">
-
-{{ equipamento.numero_serie }}
-
-</div>
-
-</div>
+EQUIPAMENTO
 
 </div>
 
 <div class="linha">
 
+    <div class="col-30">
+
+        <div class="campo">
+
+            <div class="label">
+
+                Tipo
+
+            </div>
+
+            <div class="valor">
+
+                {{ equipamento.get_tipo_display }}
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-30">
+
+        <div class="campo">
+
+            <div class="label">
+
+                Marca
+
+            </div>
+
+            <div class="valor">
+
+                {{ equipamento.marca }}
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-40">
+
+        <div class="campo">
+
+            <div class="label">
+
+                Modelo
+
+            </div>
+
+            <div class="valor">
+
+                {{ equipamento.modelo }}
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
 <div class="campo">
 
-<div class="label">
+    <div class="label">
 
-Acessórios Recebidos
+        Número de Série
 
-</div>
+    </div>
 
-<div class="caixa">
+    <div class="valor">
 
-{{ equipamento.acessorios }}
+        {{ equipamento.numero_serie }}
 
-</div>
-
-</div>
+    </div>
 
 </div>
 
-<div class="linha">
+<div class="titulo">
+
+    ACESSÓRIOS RECEBIDOS
+
+</div>
 
 <div class="campo">
 
-<div class="label">
+    <div class="caixa-media">
 
-Defeito Informado
+        {{ ordem.acessorios }}
 
-</div>
-
-<div class="caixa-grande">
-
-{{ ordem.defeito }}
+    </div>
 
 </div>
 
-</div>
+<div class="titulo">
+
+    DEFEITO INFORMADO PELO CLIENTE
 
 </div>
 
-<div class="linha">
+<div class="campo">
+
+    <div class="caixa-grande">
+
+        {{ ordem.defeito }}
+
+    </div>
+
+</div>
+
+<div class="titulo">
+
+    TERMO DE RESPONSABILIDADE
+
+</div>
+
+<div class="termo">
+
+Declaro que entreguei o equipamento acima identificado para orçamento ou reparo na Wave Tecnologia, estando ciente de que equipamentos não retirados no prazo estabelecido poderão ser armazenados conforme a política da empresa. Confirmo também que as informações prestadas nesta ficha são verdadeiras.
+
+</div>
 
 <div class="assinaturas">
 
-<div class="ass">
+    <div class="ass">
 
-<div class="linha-ass">
+        <div class="linha-ass">
 
-Cliente
+            Cliente
 
-</div>
+        </div>
 
-</div>
+    </div>
 
-<div class="ass">
+    <div class="ass">
 
-<div class="linha-ass">
+        <div class="linha-ass">
 
-Wave Tecnologia
+            Wave Tecnologia
 
-</div>
+        </div>
 
-</div>
-
-</div>
+    </div>
 
 </div>
 
 </div>
 
-<br>
+</div>
 
-<button onclick="window.print()">
+<div style="text-align:center; margin-top:15px;" class="no-print">
 
-🖨 Imprimir
+    <a href="{% url 'detalhe_ordem' ordem.id %}"
+       style="
+            padding:8px 20px;
+            background:#6c757d;
+            color:white;
+            text-decoration:none;
+            border-radius:4px;
+            margin-right:10px;">
 
-</button>
+        ← Voltar
+
+    </a>
+
+    <button onclick="window.print()"
+            style="
+                padding:8px 20px;
+                background:#0d6efd;
+                color:white;
+                border:none;
+                border-radius:4px;
+                cursor:pointer;">
+
+        🖨 Imprimir
+
+    </button>
+
+</div>
 
 </body>
 

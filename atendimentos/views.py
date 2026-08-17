@@ -1,7 +1,10 @@
+from decimal import Decimal, InvalidOperation
+
 from django.shortcuts import render, redirect, get_object_or_404
 
 from .models import Atendimento
 from ordens.models import OrdemServico
+from financeiro.models import Lancamento
 
 
 def novo_atendimento(request, ordem_id):
@@ -23,7 +26,14 @@ def novo_atendimento(request, ordem_id):
 
         valor = request.POST.get("valor", "").strip()
 
-        atendimento.valor = valor or 0
+        try:
+            atendimento.valor = (
+                Decimal(valor)
+                if valor
+                else Decimal("0.00")
+            )
+        except InvalidOperation:
+            atendimento.valor = Decimal("0.00")
 
         atendimento.forma_pagamento = request.POST["forma_pagamento"]
         atendimento.status = request.POST["status"]
@@ -47,21 +57,48 @@ def novo_atendimento(request, ordem_id):
 
             ordem.save()
 
+        if (
+            atendimento.status == "ENTREGUE"
+            and atendimento.valor > Decimal("0.00")
+        ):
+
+            Lancamento.objects.update_or_create(
+
+                ordem=ordem,
+
+                defaults={
+
+                    "tipo": "RECEITA",
+
+                    "descricao": (
+                        f"OS #{ordem.id} - "
+                        f"{ordem.cliente.nome}"
+                    ),
+
+                    "valor": atendimento.valor,
+
+                    "forma_pagamento": (
+                        atendimento.forma_pagamento
+                    ),
+
+                    "observacoes": (
+                        "Receita gerada automaticamente "
+                        "pela Ordem de Serviço."
+                    ),
+
+                }
+
+            )
+
         return redirect("lista_ordens")
 
     return render(
-
         request,
-
         "atendimentos/novo_atendimento.html",
-
         {
-
             "ordem": ordem,
             "atendimento": atendimento,
-
         }
-
     )
 
 
@@ -85,7 +122,14 @@ def editar_atendimento(request, ordem_id):
 
         valor = request.POST.get("valor", "").strip()
 
-        atendimento.valor = valor or 0
+        try:
+            atendimento.valor = (
+                Decimal(valor)
+                if valor
+                else Decimal("0.00")
+            )
+        except InvalidOperation:
+            atendimento.valor = Decimal("0.00")
 
         atendimento.forma_pagamento = request.POST["forma_pagamento"]
         atendimento.status = request.POST["status"]
@@ -109,19 +153,46 @@ def editar_atendimento(request, ordem_id):
 
             ordem.save()
 
+        if (
+            atendimento.status == "ENTREGUE"
+            and atendimento.valor > Decimal("0.00")
+        ):
+
+            Lancamento.objects.update_or_create(
+
+                ordem=ordem,
+
+                defaults={
+
+                    "tipo": "RECEITA",
+
+                    "descricao": (
+                        f"OS #{ordem.id} - "
+                        f"{ordem.cliente.nome}"
+                    ),
+
+                    "valor": atendimento.valor,
+
+                    "forma_pagamento": (
+                        atendimento.forma_pagamento
+                    ),
+
+                    "observacoes": (
+                        "Receita gerada automaticamente "
+                        "pela Ordem de Serviço."
+                    ),
+
+                }
+
+            )
+
         return redirect("lista_ordens")
 
     return render(
-
         request,
-
         "atendimentos/editar_atendimento.html",
-
         {
-
             "ordem": ordem,
             "atendimento": atendimento,
-
         }
-
     )

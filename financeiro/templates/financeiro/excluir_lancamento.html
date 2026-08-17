@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block title %}
+Excluir Lançamento
+{% endblock %}
+
+{% block content %}
+
+<div class="card shadow">
+
+    <div class="card-header bg-danger text-white">
+
+        <h3 class="mb-0">
+
+            🗑 Excluir Lançamento
+
+        </h3>
+
+    </div>
+
+    <div class="card-body">
+
+        <p class="fs-5">
+
+            Deseja realmente excluir o lançamento abaixo?
+
+        </p>
+
+        <hr>
+
+        <p>
+
+            <strong>Tipo:</strong>
+
+            {{ lancamento.get_tipo_display }}
+
+        </p>
+
+        <p>
+
+            <strong>Descrição:</strong>
+
+            {{ lancamento.descricao }}
+
+        </p>
+
+        <p>
+
+            <strong>Valor:</strong>
+
+            R$ {{ lancamento.valor }}
+
+        </p>
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+            <button
+                class="btn btn-danger">
+
+                🗑 Confirmar Exclusão
+
+            </button>
+
+            <a
+                href="{% url 'lista_financeiro' %}"
+                class="btn btn-secondary">
+
+                Cancelar
+
+            </a>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}
