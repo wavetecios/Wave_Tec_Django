@@ -5,6 +5,7 @@ from django.utils import timezone
 from django.db.models import Sum
 
 from .models import Lancamento
+from atendimentos.models import Atendimento
 
 
 def lista_financeiro(request):
@@ -214,6 +215,15 @@ def editar_lancamento(request, lancamento_id):
         lancamento.observacoes = request.POST["observacoes"]
 
         lancamento.save()
+
+        # Sincronizar valor com o atendimento se o lançamento está associado a uma ordem
+        if lancamento.ordem:
+            try:
+                atendimento = Atendimento.objects.get(ordem=lancamento.ordem)
+                atendimento.valor = lancamento.valor
+                atendimento.save()
+            except Atendimento.DoesNotExist:
+                pass
 
         return redirect("lista_financeiro")
 

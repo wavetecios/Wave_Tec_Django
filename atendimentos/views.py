@@ -70,6 +70,8 @@ def novo_atendimento(request, ordem_id):
 
                     "tipo": "RECEITA",
 
+                    "categoria": "SERVICOS",
+
                     "descricao": (
                         f"OS #{ordem.id} - "
                         f"{ordem.cliente.nome}"
@@ -89,6 +91,12 @@ def novo_atendimento(request, ordem_id):
                 }
 
             )
+
+        else:
+
+            Lancamento.objects.filter(
+                ordem=ordem
+            ).delete()
 
         return redirect("lista_ordens")
 
@@ -166,6 +174,8 @@ def editar_atendimento(request, ordem_id):
 
                     "tipo": "RECEITA",
 
+                    "categoria": "SERVICOS",
+
                     "descricao": (
                         f"OS #{ordem.id} - "
                         f"{ordem.cliente.nome}"
@@ -185,6 +195,12 @@ def editar_atendimento(request, ordem_id):
                 }
 
             )
+
+        else:
+
+            Lancamento.objects.filter(
+                ordem=ordem
+            ).delete()
 
         return redirect("lista_ordens")
 

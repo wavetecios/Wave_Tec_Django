@@ -1,3 +1,4 @@
+```html
 {% extends "base.html" %}
 
 {% block title %}
@@ -20,7 +21,9 @@ Editar Atendimento
 
         <div class="alert alert-light border mb-4">
 
-            <strong>Ordem de Serviço #{{ ordem.id }}</strong>
+            <strong>
+                Ordem de Serviço #{{ ordem.id }}
+            </strong>
 
             <div class="mt-2">
 
@@ -41,12 +44,11 @@ Editar Atendimento
 
         </div>
 
+
         <div class="mb-3">
 
             <label class="form-label">
-
                 Defeito Informado
-
             </label>
 
             <textarea
@@ -56,12 +58,11 @@ Editar Atendimento
 
         </div>
 
+
         <div class="mb-4">
 
             <label class="form-label">
-
                 Acessórios Recebidos
-
             </label>
 
             <textarea
@@ -71,18 +72,19 @@ Editar Atendimento
 
         </div>
 
+
         <hr>
+
 
         <form method="POST">
 
             {% csrf_token %}
 
+
             <div class="mb-3">
 
                 <label class="form-label">
-
                     Diagnóstico
-
                 </label>
 
                 <textarea
@@ -92,12 +94,11 @@ Editar Atendimento
 
             </div>
 
+
             <div class="mb-3">
 
                 <label class="form-label">
-
                     Serviço Executado
-
                 </label>
 
                 <textarea
@@ -107,10 +108,10 @@ Editar Atendimento
 
             </div>
 
+
             <div class="mb-3">
 
                 <label class="form-label">
-
                     Peças Utilizadas
 
                 </label>
@@ -122,24 +123,26 @@ Editar Atendimento
 
             </div>
 
+
             <div class="row">
+
 
                 <div class="col-md-4">
 
                     <label class="form-label">
-
                         Valor
-
                     </label>
 
                     <input
                         type="number"
                         step="0.01"
+                        min="0"
                         name="valor"
                         class="form-control"
-                        value="{{ atendimento.valor }}">
+                        value="{{ atendimento.valor|floatformat:2 }}">
 
                 </div>
+
 
                 <div class="col-md-4">
 
@@ -149,20 +152,47 @@ Editar Atendimento
 
                     </label>
 
-                    <input
-                        type="text"
+                    <select
                         name="forma_pagamento"
-                        class="form-control"
-                        value="{{ atendimento.forma_pagamento }}">
+                        class="form-select">
+
+                        <option value="DINHEIRO"
+                            {% if atendimento.forma_pagamento == "DINHEIRO" %}
+                                selected
+                            {% endif %}>
+                            Dinheiro
+                        </option>
+
+                        <option value="PIX"
+                            {% if atendimento.forma_pagamento == "PIX" %}
+                                selected
+                            {% endif %}>
+                            PIX
+                        </option>
+
+                        <option value="CARTAO"
+                            {% if atendimento.forma_pagamento == "CARTAO" %}
+                                selected
+                            {% endif %}>
+                            Cartão
+                        </option>
+
+                        <option value="TRANSFERENCIA"
+                            {% if atendimento.forma_pagamento == "TRANSFERENCIA" %}
+                                selected
+                            {% endif %}>
+                            Transferência
+                        </option>
+
+                    </select>
 
                 </div>
+
 
                 <div class="col-md-4">
 
                     <label class="form-label">
-
                         Status
-
                     </label>
 
                     <select
@@ -173,7 +203,9 @@ Editar Atendimento
 
                             <option
                                 value="{{ valor }}"
-                                {% if atendimento.status == valor %}selected{% endif %}>
+                                {% if atendimento.status == valor %}
+                                    selected
+                                {% endif %}>
 
                                 {{ texto }}
 
@@ -185,7 +217,9 @@ Editar Atendimento
 
                 </div>
 
+
             </div>
+
 
             <div class="d-flex justify-content-between mt-4">
 
@@ -197,7 +231,9 @@ Editar Atendimento
 
                 </a>
 
+
                 <button
+                    type="submit"
                     class="btn btn-success">
 
                     💾 Salvar Alterações
@@ -206,6 +242,7 @@ Editar Atendimento
 
             </div>
 
+
         </form>
 
     </div>
@@ -213,3 +250,4 @@ Editar Atendimento
 </div>
 
 {% endblock %}
+```
