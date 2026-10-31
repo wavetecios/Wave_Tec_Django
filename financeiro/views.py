@@ -3,11 +3,13 @@ from decimal import Decimal
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils import timezone
 from django.db.models import Sum
+from django.contrib.auth.decorators import login_required
 
 from .models import Lancamento
 from atendimentos.models import Atendimento
 
 
+@login_required
 def lista_financeiro(request):
 
     hoje = timezone.localdate()
@@ -165,6 +167,7 @@ def lista_financeiro(request):
     )
 
 
+@login_required
 def novo_lancamento(request):
 
     if request.method == "POST":
@@ -193,6 +196,7 @@ def novo_lancamento(request):
     )
 
 
+@login_required
 def editar_lancamento(request, lancamento_id):
 
     lancamento = get_object_or_404(
@@ -236,6 +240,7 @@ def editar_lancamento(request, lancamento_id):
     )
 
 
+@login_required
 def excluir_lancamento(request, lancamento_id):
 
     lancamento = get_object_or_404(

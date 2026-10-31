@@ -1,12 +1,14 @@
 from decimal import Decimal, InvalidOperation
 
 from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.decorators import login_required
 
 from .models import Atendimento
 from ordens.models import OrdemServico
 from financeiro.models import Lancamento
 
 
+@login_required
 def novo_atendimento(request, ordem_id):
 
     ordem = get_object_or_404(
@@ -110,6 +112,7 @@ def novo_atendimento(request, ordem_id):
     )
 
 
+@login_required
 def editar_atendimento(request, ordem_id):
 
     ordem = get_object_or_404(

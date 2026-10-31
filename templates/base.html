@@ -126,6 +126,16 @@
 
             </form>
 
+            {% if user.is_authenticated %}
+                <div class="d-flex align-items-center gap-2 ms-3 text-white">
+                    <span class="small">Olá, {{ user.username }}</span>
+                    <form method="post" action="{% url 'logout' %}" class="d-inline">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-outline-light btn-sm">Sair</button>
+                    </form>
+                </div>
+            {% endif %}
+
         </div>
 
     </div>

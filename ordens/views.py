@@ -1,9 +1,11 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.decorators import login_required
 
 from .models import OrdemServico
 from equipamentos.models import Equipamento
 
 
+@login_required
 def lista_ordens(request):
 
     status = request.GET.get("status")
@@ -34,6 +36,7 @@ def lista_ordens(request):
     )
 
 
+@login_required
 def nova_ordem(request, equipamento_id):
 
     equipamento = get_object_or_404(
@@ -78,6 +81,7 @@ def nova_ordem(request, equipamento_id):
     )
 
 
+@login_required
 def editar_ordem(request, ordem_id):
 
     ordem = get_object_or_404(
@@ -112,6 +116,7 @@ def editar_ordem(request, ordem_id):
     )
 
 
+@login_required
 def detalhe_ordem(request, ordem_id):
 
     ordem = get_object_or_404(
@@ -143,6 +148,7 @@ def detalhe_ordem(request, ordem_id):
     )
 
 
+@login_required
 def imprimir_os(request, ordem_id):
 
     ordem = get_object_or_404(
@@ -174,6 +180,7 @@ def imprimir_os(request, ordem_id):
     )
 
 
+@login_required
 def imprimir_entrada(request, ordem_id):
 
     ordem = get_object_or_404(

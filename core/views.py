@@ -3,6 +3,7 @@ from decimal import Decimal
 from django.shortcuts import render
 from django.utils import timezone
 from django.db.models import Sum
+from django.contrib.auth.decorators import login_required
 
 from clientes.models import Cliente
 from equipamentos.models import Equipamento
@@ -10,6 +11,7 @@ from ordens.models import OrdemServico
 from financeiro.models import Lancamento
 
 
+@login_required
 def home(request):
 
     hoje = timezone.localdate()

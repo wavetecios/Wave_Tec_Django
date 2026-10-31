@@ -1,12 +1,14 @@
 from django.shortcuts import render
 
 from django.db.models import Q
+from django.contrib.auth.decorators import login_required
 
 from clientes.models import Cliente
 from equipamentos.models import Equipamento
 from ordens.models import OrdemServico
 
 
+@login_required
 def pesquisa_global(request):
 
     termo = request.GET.get("q", "").strip()
