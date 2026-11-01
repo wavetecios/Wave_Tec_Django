@@ -4,6 +4,28 @@ from django.contrib.auth.decorators import login_required
 from usuarios.decorators import tecnico_required, admin_required
 from .models import OrdemServico
 from equipamentos.models import Equipamento
+from financeiro.models import Lancamento
+from atendimentos.models import Atendimento
+
+
+def _sync_finance_from_ordem(ordem):
+    atendimento = getattr(ordem, "atendimento", None)
+    if ordem.status == "ENTREGUE":
+        valor = atendimento.valor if atendimento else ordem.valor
+        if valor and valor > 0:
+            Lancamento.objects.update_or_create(
+                ordem=ordem,
+                defaults={
+                    "tipo": "RECEITA",
+                    "categoria": "SERVICOS",
+                    "descricao": f"OS #{ordem.id} - {ordem.cliente.nome}",
+                    "valor": valor,
+                    "forma_pagamento": ordem.forma_pagamento or "DINHEIRO",
+                    "observacoes": "Receita gerada automaticamente após entrega da ordem.",
+                },
+            )
+            return
+    Lancamento.objects.filter(ordem=ordem).delete()
 
 
 @login_required
@@ -99,7 +121,26 @@ def editar_ordem(request, ordem_id):
         ordem.acessorios = request.POST["acessorios"]
         ordem.observacoes = request.POST["observacoes"]
 
+        pagamento = request.POST.get("forma_pagamento", "").strip()
+        if pagamento in {"DINHEIRO", "PIX", "CARTAO", "TRANSFERENCIA"}:
+            ordem.forma_pagamento = pagamento
+
+        status = request.POST.get("status", "").strip()
+        if status in dict(OrdemServico.STATUS):
+            ordem.status = status
+
         ordem.save()
+
+        atendimento = getattr(ordem, "atendimento", None)
+        if atendimento:
+            atendimento.forma_pagamento = ordem.forma_pagamento
+            atendimento.status = ordem.status
+            atendimento.save()
+            if ordem.status == "ENTREGUE" and atendimento.valor > 0:
+                atendimento.valor = atendimento.valor
+                atendimento.save()
+
+        _sync_finance_from_ordem(ordem)
 
         return redirect("lista_ordens")
 
