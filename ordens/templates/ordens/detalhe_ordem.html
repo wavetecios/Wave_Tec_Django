@@ -246,12 +246,22 @@ Ordem de Serviço #{{ ordem.id }}
 
                     {% if user.is_superuser or user.tecnico.perfil == 'ADMIN' %}
                     <a
-                        href="{% url 'editar_ordem' ordem.id %}"
+                        href="{% url 'finalizar_ordem' ordem.id %}"
                         class="btn btn-warning">
 
-                        ✏️ Editar OS
+                        🧾 Fechar OS
 
                     </a>
+
+                    {% if atendimento %}
+                    <a
+                        href="{% url 'finalizar_atendimento' ordem.id %}"
+                        class="btn btn-success">
+
+                        ✅ Fechar Atendimento
+
+                    </a>
+                    {% endif %}
                     {% endif %}
 
 
@@ -259,9 +269,9 @@ Ordem de Serviço #{{ ordem.id }}
 
                     <a
                         href="{% url 'editar_atendimento' ordem.id %}"
-                        class="btn btn-success">
+                        class="btn btn-outline-success">
 
-                        ✏️ Editar Atendimento
+                        🛠️ Editar Atendimento
 
                     </a>
 
@@ -271,7 +281,7 @@ Ordem de Serviço #{{ ordem.id }}
                         href="{% url 'novo_atendimento' ordem.id %}"
                         class="btn btn-primary">
 
-                        🔧 Atendimento
+                        🔧 Registrar Atendimento
 
                     </a>
 

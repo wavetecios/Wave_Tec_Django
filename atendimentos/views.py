@@ -3,7 +3,7 @@ from decimal import Decimal, InvalidOperation
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 
-from usuarios.decorators import tecnico_required
+from usuarios.decorators import tecnico_required, admin_required
 from .models import Atendimento
 from ordens.models import OrdemServico
 from financeiro.models import Lancamento
@@ -139,15 +139,6 @@ def editar_atendimento(request, ordem_id):
         except InvalidOperation:
             atendimento.valor = Decimal("0.00")
 
-        if _is_admin(request.user):
-            pagamento = request.POST.get("forma_pagamento", "").strip()
-            if pagamento in {"DINHEIRO", "PIX", "CARTAO", "TRANSFERENCIA"}:
-                atendimento.forma_pagamento = pagamento
-
-            status = request.POST.get("status", "").strip()
-            if status in dict(Atendimento.STATUS):
-                atendimento.status = status
-
         atendimento.save()
         _sync_finance_por_entrega(atendimento, ordem)
 
@@ -156,6 +147,45 @@ def editar_atendimento(request, ordem_id):
     return render(
         request,
         "atendimentos/editar_atendimento.html",
+        {
+            "ordem": ordem,
+            "atendimento": atendimento,
+        }
+    )
+
+
+@login_required
+@admin_required
+def finalizar_atendimento(request, ordem_id):
+
+    ordem = get_object_or_404(
+        OrdemServico,
+        id=ordem_id
+    )
+
+    atendimento = get_object_or_404(
+        Atendimento,
+        ordem=ordem
+    )
+
+    if request.method == "POST":
+
+        pagamento = request.POST.get("forma_pagamento", "").strip()
+        if pagamento in {"DINHEIRO", "PIX", "CARTAO", "TRANSFERENCIA"}:
+            atendimento.forma_pagamento = pagamento
+
+        status = request.POST.get("status", "").strip()
+        if status in dict(Atendimento.STATUS):
+            atendimento.status = status
+
+        atendimento.save()
+        _sync_finance_por_entrega(atendimento, ordem)
+
+        return redirect("lista_ordens")
+
+    return render(
+        request,
+        "atendimentos/finalizar_atendimento.html",
         {
             "ordem": ordem,
             "atendimento": atendimento,

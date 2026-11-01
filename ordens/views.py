@@ -246,3 +246,45 @@ def imprimir_entrada(request, ordem_id):
         }
     )
 
+
+@login_required
+@admin_required
+def finalizar_ordem(request, ordem_id):
+
+    ordem = get_object_or_404(
+        OrdemServico,
+        id=ordem_id
+    )
+
+    if request.method == "POST":
+
+        pagamento = request.POST.get("forma_pagamento", "").strip()
+        if pagamento in {"DINHEIRO", "PIX", "CARTAO", "TRANSFERENCIA"}:
+            ordem.forma_pagamento = pagamento
+
+        status = request.POST.get("status", "").strip()
+        if status in dict(OrdemServico.STATUS):
+            ordem.status = status
+
+        ordem.save()
+
+        atendimento = getattr(ordem, "atendimento", None)
+        if atendimento:
+            atendimento.forma_pagamento = ordem.forma_pagamento
+            atendimento.status = ordem.status
+            atendimento.save()
+
+        _sync_finance_from_ordem(ordem)
+
+        return redirect("lista_ordens")
+
+    return render(
+        request,
+        "ordens/finalizar_ordem.html",
+        {
+            "ordem": ordem,
+            "cliente": ordem.cliente,
+            "equipamento": ordem.equipamento_cadastrado,
+        }
+    )
+

@@ -16,4 +16,10 @@ urlpatterns = [
         name="editar_atendimento",
     ),
 
+    path(
+        "finalizar/<int:ordem_id>/",
+        views.finalizar_atendimento,
+        name="finalizar_atendimento",
+    ),
+
 ]

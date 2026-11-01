@@ -33,6 +33,12 @@ urlpatterns = [
     name="imprimir_entrada"
     ), 
 
+    path(
+        "finalizar/<int:ordem_id>/",
+        views.finalizar_ordem,
+        name="finalizar_ordem"
+    ),
+
     # SEMPRE deixe a rota genérica por último
     path(
         "<int:ordem_id>/",

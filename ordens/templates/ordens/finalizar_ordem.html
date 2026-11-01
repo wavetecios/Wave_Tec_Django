@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+
+{% block title %}
+Fechar OS
+{% endblock %}
+
+{% block content %}
+
+<div class="card shadow">
+
+    <div class="card-header bg-warning text-dark">
+
+        <h3 class="mb-0">
+            🧾 Fechar OS
+        </h3>
+
+    </div>
+
+    <div class="card-body">
+
+        <div class="alert alert-light border mb-4">
+
+            <strong>
+                Ordem de Serviço #{{ ordem.id }}
+            </strong>
+
+            <div class="mt-2">
+
+                👤 <strong>{{ ordem.cliente.nome }}</strong>
+
+                <br>
+
+                📞 {{ ordem.cliente.telefone }}
+
+                <br>
+
+                🖥 {{ ordem.equipamento_cadastrado.get_tipo_display }}
+                -
+                {{ ordem.equipamento_cadastrado.marca }}
+                {{ ordem.equipamento_cadastrado.modelo }}
+
+            </div>
+
+        </div>
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+            <div class="row mb-4">
+
+                <div class="col-md-6">
+                    <label class="form-label">
+                        Forma de Pagamento
+                    </label>
+                    <select name="forma_pagamento" class="form-select">
+                        <option value="DINHEIRO" {% if ordem.forma_pagamento == "DINHEIRO" %}selected{% endif %}>Dinheiro</option>
+                        <option value="PIX" {% if ordem.forma_pagamento == "PIX" %}selected{% endif %}>PIX</option>
+                        <option value="CARTAO" {% if ordem.forma_pagamento == "CARTAO" %}selected{% endif %}>Cartão</option>
+                        <option value="TRANSFERENCIA" {% if ordem.forma_pagamento == "TRANSFERENCIA" %}selected{% endif %}>Transferência</option>
+                    </select>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label">
+                        Status da OS
+                    </label>
+                    <select name="status" class="form-select">
+                        {% for valor, texto in ordem.STATUS %}
+                            <option value="{{ valor }}" {% if ordem.status == valor %}selected{% endif %}>{{ texto }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+            </div>
+
+            <div class="d-flex justify-content-between">
+
+                <a
+                    href="{% url 'lista_ordens' %}"
+                    class="btn btn-secondary">
+
+                    ← Voltar
+
+                </a>
+
+                <button
+                    type="submit"
+                    class="btn btn-success">
+
+                    ✅ Fechar OS
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}
