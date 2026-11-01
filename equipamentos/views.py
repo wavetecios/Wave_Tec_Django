@@ -1,11 +1,13 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 
+from usuarios.decorators import tecnico_required, admin_required
 from clientes.models import Cliente
 from .models import Equipamento
 
 
 @login_required
+@tecnico_required
 def lista_equipamentos(request):
 
     equipamentos = Equipamento.objects.all()
@@ -20,6 +22,7 @@ def lista_equipamentos(request):
 
 
 @login_required
+@tecnico_required
 def novo_equipamento(request, cliente_id):
 
     cliente = get_object_or_404(
@@ -62,6 +65,7 @@ def novo_equipamento(request, cliente_id):
 
 
 @login_required
+@admin_required
 def editar_equipamento(request, equipamento_id):
 
     equipamento = get_object_or_404(

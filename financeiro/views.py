@@ -5,16 +5,18 @@ from django.utils import timezone
 from django.db.models import Sum
 from django.contrib.auth.decorators import login_required
 
+from usuarios.decorators import admin_required
 from .models import Lancamento
 from atendimentos.models import Atendimento
 
 
 @login_required
+@admin_required
 def lista_financeiro(request):
 
     hoje = timezone.localdate()
 
-    periodo = request.GET.get("periodo", "mes")
+    periodo = request.GET.get("periodo", "hoje")
 
     data_inicio = request.GET.get("data_inicio", "")
     data_fim = request.GET.get("data_fim", "")
@@ -39,6 +41,10 @@ def lista_financeiro(request):
         lancamentos = lancamentos.filter(
             data__year=hoje.year
         )
+
+    elif periodo == "todos":
+
+        lancamentos = Lancamento.objects.all()
 
     elif periodo == "personalizado":
 
@@ -168,6 +174,7 @@ def lista_financeiro(request):
 
 
 @login_required
+@admin_required
 def novo_lancamento(request):
 
     if request.method == "POST":
@@ -197,6 +204,7 @@ def novo_lancamento(request):
 
 
 @login_required
+@admin_required
 def editar_lancamento(request, lancamento_id):
 
     lancamento = get_object_or_404(
@@ -241,6 +249,7 @@ def editar_lancamento(request, lancamento_id):
 
 
 @login_required
+@admin_required
 def excluir_lancamento(request, lancamento_id):
 
     lancamento = get_object_or_404(

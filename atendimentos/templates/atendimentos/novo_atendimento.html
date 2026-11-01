@@ -141,48 +141,15 @@ Atendimento Técnico
 
                 </div>
 
-                <div class="col-md-4">
-
+                <div class="col-md-8">
                     <label class="form-label">
-
-                        Forma de Pagamento
-
+                        Observação
                     </label>
-
                     <input
                         type="text"
-                        name="forma_pagamento"
                         class="form-control"
-                        value="{{ atendimento.forma_pagamento }}">
-
-                </div>
-
-                <div class="col-md-4">
-
-                    <label class="form-label">
-
-                        Status
-
-                    </label>
-
-                    <select
-                        name="status"
-                        class="form-select">
-
-                        {% for valor, texto in atendimento.STATUS %}
-
-                            <option
-                                value="{{ valor }}"
-                                {% if atendimento.status == valor %}selected{% endif %}>
-
-                                {{ texto }}
-
-                            </option>
-
-                        {% endfor %}
-
-                    </select>
-
+                        value="Apenas diagnóstico, serviço executado, peças e valor"
+                        readonly>
                 </div>
 
             </div>

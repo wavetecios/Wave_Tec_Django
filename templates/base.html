@@ -95,6 +95,18 @@
 
                 </li>
 
+                {% if user.is_superuser or user.tecnico.perfil == 'ADMIN' %}
+                <li class="nav-item">
+
+                    <a class="nav-link" href="/usuarios/">
+
+                        👷 Técnicos
+
+                    </a>
+
+                </li>
+                {% endif %}
+
             </ul>
 
             <!-- Pesquisa Global -->

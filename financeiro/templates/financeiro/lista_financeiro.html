@@ -50,6 +50,12 @@ Financeiro
                         </option>
 
                         <option
+                            value="todos"
+                            {% if periodo == "todos" %}selected{% endif %}>
+                            Todos
+                        </option>
+
+                        <option
                             value="personalizado"
                             {% if periodo == "personalizado" %}selected{% endif %}>
                             Personalizado

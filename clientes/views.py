@@ -1,10 +1,12 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 
+from usuarios.decorators import tecnico_required, admin_required
 from .models import Cliente
 
 
 @login_required
+@tecnico_required
 def lista_clientes(request):
 
     clientes = Cliente.objects.all()
@@ -19,6 +21,7 @@ def lista_clientes(request):
 
 
 @login_required
+@tecnico_required
 def novo_cliente(request):
 
     if request.method == "POST":
@@ -45,6 +48,7 @@ def novo_cliente(request):
 
 
 @login_required
+@admin_required
 def editar_cliente(request, cliente_id):
 
     cliente = get_object_or_404(

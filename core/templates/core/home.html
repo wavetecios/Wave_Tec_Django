@@ -540,6 +540,22 @@ Wave Tec - Dashboard
 </div>
 
 
+<div class="alert {% if is_admin %}alert-primary{% else %}alert-warning{% endif %} mb-4">
+    {% if is_admin %}
+        <strong>Perfil: Administrador</strong> — você tem acesso completo ao sistema, incluindo financeiro e gestão de usuários.
+    {% else %}
+        <strong>Perfil: Técnico</strong> — você está acessando o painel operacional da assistência técnica.
+    {% endif %}
+</div>
+
+
+{% if messages %}
+    {% for message in messages %}
+        <div class="alert {% if message.tags == 'error' %}alert-danger{% else %}alert-info{% endif %} shadow-sm" role="alert">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
 
 
 {% endblock %}

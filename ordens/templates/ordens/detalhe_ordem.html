@@ -244,6 +244,7 @@ Ordem de Serviço #{{ ordem.id }}
                 <div class="d-flex gap-2 flex-wrap">
 
 
+                    {% if user.is_superuser or user.tecnico.perfil == 'ADMIN' %}
                     <a
                         href="{% url 'editar_ordem' ordem.id %}"
                         class="btn btn-warning">
@@ -251,6 +252,7 @@ Ordem de Serviço #{{ ordem.id }}
                         ✏️ Editar OS
 
                     </a>
+                    {% endif %}
 
 
                     {% if atendimento %}

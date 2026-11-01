@@ -1,4 +1,3 @@
-```html
 {% extends "base.html" %}
 
 {% block title %}
@@ -143,13 +142,11 @@ Editar Atendimento
 
                 </div>
 
-
+                {% if user.is_superuser or user.tecnico.perfil == 'ADMIN' %}
                 <div class="col-md-4">
 
                     <label class="form-label">
-
                         Forma de Pagamento
-
                     </label>
 
                     <select
@@ -216,6 +213,18 @@ Editar Atendimento
                     </select>
 
                 </div>
+                {% else %}
+                <div class="col-md-8">
+                    <label class="form-label">
+                        Observação
+                    </label>
+                    <input
+                        type="text"
+                        class="form-control"
+                        value="Apenas diagnóstico, serviço executado, peças e valor"
+                        readonly>
+                </div>
+                {% endif %}
 
 
             </div>
@@ -250,4 +259,3 @@ Editar Atendimento
 </div>
 
 {% endblock %}
-```

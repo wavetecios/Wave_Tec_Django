@@ -19,6 +19,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+HANDLER403 = 'wave_tec.views.permission_denied'
+
 
 # ===========================
 # APLICAÇÕES
@@ -40,6 +42,7 @@ INSTALLED_APPS = [
     'atendimentos',
     'pesquisa',
     'financeiro',
+    'usuarios',
 
 ]
 

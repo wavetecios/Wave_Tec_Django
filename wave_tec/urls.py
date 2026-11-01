@@ -43,4 +43,9 @@ urlpatterns = [
         include("pesquisa.urls")
     ),
 
+    path(
+        "usuarios/",
+        include("usuarios.urls")
+    ),
+
 ]

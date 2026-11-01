@@ -76,6 +76,17 @@ def home(request):
     saldo_mes = receitas_mes - despesas_mes
 
 
+    is_admin = (
+        request.user.is_superuser
+        or (
+            hasattr(request.user, "tecnico")
+            and request.user.tecnico is not None
+            and request.user.tecnico.perfil == "ADMIN"
+        )
+    )
+
+    perfil_usuario = "ADMIN" if is_admin else "TECNICO"
+
     context = {
 
         "total_clientes": total_clientes,
@@ -99,6 +110,10 @@ def home(request):
         "despesas_mes": despesas_mes,
 
         "saldo_mes": saldo_mes,
+
+        "is_admin": is_admin,
+
+        "perfil_usuario": perfil_usuario,
 
     }
 
