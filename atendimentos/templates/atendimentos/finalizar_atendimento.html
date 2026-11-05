@@ -43,6 +43,10 @@ Fechar Atendimento
 
         </div>
 
+        <div class="alert alert-info border mb-4">
+            <strong>Financeiro:</strong> confirme o valor do serviço e escolha o status final da ordem: <strong>Pronto</strong>, <strong>Aguardando retirada</strong> ou <strong>Entregue</strong>.
+        </div>
+
         <form method="POST">
 
             {% csrf_token %}
@@ -63,15 +67,22 @@ Fechar Atendimento
 
                 <div class="col-md-6">
                     <label class="form-label">
-                        Status do Atendimento
+                        Status Financeiro
                     </label>
                     <select name="status" class="form-select">
-                        {% for valor, texto in atendimento.STATUS %}
-                            <option value="{{ valor }}" {% if atendimento.status == valor %}selected{% endif %}>{{ texto }}</option>
-                        {% endfor %}
+                        <option value="PRONTO" {% if atendimento.status == 'PRONTO' %}selected{% endif %}>Pronto</option>
+                        <option value="AGUARDANDO_RETIRADA" {% if atendimento.status == 'AGUARDANDO_RETIRADA' %}selected{% endif %}>Aguardando retirada</option>
+                        <option value="ENTREGUE" {% if atendimento.status == 'ENTREGUE' %}selected{% endif %}>Entregue</option>
                     </select>
                 </div>
 
+            </div>
+
+            <div class="mb-4">
+                <label class="form-label">
+                    Valor do Serviço
+                </label>
+                <input type="number" step="0.01" min="0" name="valor" class="form-control" value="{{ atendimento.valor|floatformat:2 }}">
             </div>
 
             <div class="d-flex justify-content-between">
@@ -88,7 +99,7 @@ Fechar Atendimento
                     type="submit"
                     class="btn btn-success">
 
-                    ✅ Fechar Atendimento
+                    ✅ Finalizar Atendimento
 
                 </button>
 

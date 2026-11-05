@@ -16,6 +16,18 @@ def _is_admin(user):
     )
 
 
+def _status_tecnico_permitidos():
+    return {"PRONTO", "AGUARDANDO_RETIRADA"}
+
+
+def _status_financeiro_permitidos():
+    return {"PRONTO", "AGUARDANDO_RETIRADA", "ENTREGUE"}
+
+
+def _status_finalizado_por_financeiro():
+    return {"AGUARDANDO_RETIRADA", "ENTREGUE"}
+
+
 def _sync_finance_por_entrega(atendimento, ordem):
     status_map = {
         "ABERTA": "ABERTA",
@@ -24,6 +36,7 @@ def _sync_finance_por_entrega(atendimento, ordem):
         "EM_REPARO": "EM_REPARO",
         "PRONTO": "PRONTO",
         "SEM_CONSERTO": "SEM_CONSERTO",
+        "AGUARDANDO_RETIRADA": "AGUARDANDO_RETIRADA",
         "ENTREGUE": "ENTREGUE",
     }
 
@@ -43,13 +56,13 @@ def _sync_finance_por_entrega(atendimento, ordem):
                 "descricao": f"OS #{ordem.id} - {ordem.cliente.nome}",
                 "valor": atendimento.valor,
                 "forma_pagamento": atendimento.forma_pagamento or "DINHEIRO",
-                "observacoes": "Receita gerada automaticamente após a entrega da ordem.",
+                "observacoes": "Receita gerada após a entrega confirmada pelo financeiro.",
             },
         )
         return
 
     ordem.valor = atendimento.valor
-    ordem.forma_pagamento = ""
+    ordem.forma_pagamento = atendimento.forma_pagamento or ""
     ordem.save()
     Lancamento.objects.filter(ordem=ordem).delete()
 
@@ -76,11 +89,7 @@ def novo_atendimento(request, ordem_id):
         valor = request.POST.get("valor", "").strip()
 
         try:
-            atendimento.valor = (
-                Decimal(valor)
-                if valor
-                else Decimal("0.00")
-            )
+            atendimento.valor = Decimal(valor) if valor else Decimal("0.00")
         except InvalidOperation:
             atendimento.valor = Decimal("0.00")
 
@@ -90,8 +99,11 @@ def novo_atendimento(request, ordem_id):
                 atendimento.forma_pagamento = pagamento
 
             status = request.POST.get("status", "").strip()
-            if status in dict(Atendimento.STATUS):
+            if status in _status_financeiro_permitidos():
                 atendimento.status = status
+
+        elif request.POST.get("status", "").strip() in _status_tecnico_permitidos():
+            atendimento.status = request.POST.get("status", "").strip()
 
         atendimento.save()
         _sync_finance_por_entrega(atendimento, ordem)
@@ -131,13 +143,25 @@ def editar_atendimento(request, ordem_id):
         valor = request.POST.get("valor", "").strip()
 
         try:
-            atendimento.valor = (
-                Decimal(valor)
-                if valor
-                else Decimal("0.00")
-            )
+            atendimento.valor = Decimal(valor) if valor else Decimal("0.00")
         except InvalidOperation:
             atendimento.valor = Decimal("0.00")
+
+        if request.user.is_superuser or (
+            getattr(request.user, 'tecnico', None) and request.user.tecnico.perfil == 'ADMIN'
+        ):
+            pagamento = request.POST.get("forma_pagamento", "").strip()
+            if pagamento in {"DINHEIRO", "PIX", "CARTAO", "TRANSFERENCIA"}:
+                atendimento.forma_pagamento = pagamento
+
+            status = request.POST.get("status", "").strip()
+            if status in _status_financeiro_permitidos():
+                atendimento.status = status
+
+        elif atendimento.status not in _status_finalizado_por_financeiro():
+            status = request.POST.get("status", "").strip()
+            if status in _status_tecnico_permitidos():
+                atendimento.status = status
 
         atendimento.save()
         _sync_finance_por_entrega(atendimento, ordem)
@@ -174,8 +198,14 @@ def finalizar_atendimento(request, ordem_id):
         if pagamento in {"DINHEIRO", "PIX", "CARTAO", "TRANSFERENCIA"}:
             atendimento.forma_pagamento = pagamento
 
+        valor = request.POST.get("valor", "").strip()
+        try:
+            atendimento.valor = Decimal(valor) if valor else Decimal("0.00")
+        except InvalidOperation:
+            atendimento.valor = Decimal("0.00")
+
         status = request.POST.get("status", "").strip()
-        if status in dict(Atendimento.STATUS):
+        if status in _status_financeiro_permitidos():
             atendimento.status = status
 
         atendimento.save()

@@ -38,6 +38,10 @@ def home(request):
         status="PRONTO"
     ).count()
 
+    ordens_aguardando_retirada = OrdemServico.objects.filter(
+        status="AGUARDANDO_RETIRADA"
+    ).count()
+
     ordens_entregues = OrdemServico.objects.filter(
         status="ENTREGUE"
     ).count()
@@ -102,6 +106,8 @@ def home(request):
         "ordens_reparo": ordens_reparo,
 
         "ordens_prontas": ordens_prontas,
+
+        "ordens_aguardando_retirada": ordens_aguardando_retirada,
 
         "ordens_entregues": ordens_entregues,
 

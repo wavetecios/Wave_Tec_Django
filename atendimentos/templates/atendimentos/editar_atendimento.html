@@ -43,6 +43,15 @@ Editar Atendimento
 
         </div>
 
+        {% if user.is_superuser or user.tecnico.perfil == 'ADMIN' %}
+        <div class="alert alert-info mb-4">
+            <strong>Financeiro:</strong> confirme o valor e defina o status final da ordem.
+        </div>
+        {% else %}
+        <div class="alert alert-warning mb-4">
+            <strong>Técnico:</strong> informe o serviço concluído e deixe o status em <strong>Pronto</strong> para a análise financeira.
+        </div>
+        {% endif %}
 
         <div class="mb-3">
 
@@ -129,7 +138,7 @@ Editar Atendimento
                 <div class="col-md-4">
 
                     <label class="form-label">
-                        Valor
+                        Valor do Serviço
                     </label>
 
                     <input
@@ -189,26 +198,16 @@ Editar Atendimento
                 <div class="col-md-4">
 
                     <label class="form-label">
-                        Status
+                        Status Financeiro
                     </label>
 
                     <select
                         name="status"
                         class="form-select">
 
-                        {% for valor, texto in atendimento.STATUS %}
-
-                            <option
-                                value="{{ valor }}"
-                                {% if atendimento.status == valor %}
-                                    selected
-                                {% endif %}>
-
-                                {{ texto }}
-
-                            </option>
-
-                        {% endfor %}
+                        <option value="PRONTO" {% if atendimento.status == 'PRONTO' %}selected{% endif %}>Pronto</option>
+                        <option value="AGUARDANDO_RETIRADA" {% if atendimento.status == 'AGUARDANDO_RETIRADA' %}selected{% endif %}>Aguardando retirada</option>
+                        <option value="ENTREGUE" {% if atendimento.status == 'ENTREGUE' %}selected{% endif %}>Entregue</option>
 
                     </select>
 
@@ -216,13 +215,11 @@ Editar Atendimento
                 {% else %}
                 <div class="col-md-8">
                     <label class="form-label">
-                        Observação
+                        Status Técnico
                     </label>
-                    <input
-                        type="text"
-                        class="form-control"
-                        value="Apenas diagnóstico, serviço executado, peças e valor"
-                        readonly>
+                    <select name="status" class="form-select">
+                        <option value="PRONTO" {% if atendimento.status == 'PRONTO' %}selected{% endif %}>Pronto</option>
+                    </select>
                 </div>
                 {% endif %}
 

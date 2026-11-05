@@ -11,6 +11,7 @@ class OrdemServico(models.Model):
         ("EM_REPARO", "Em reparo"),
         ("PRONTO", "Pronto"),
         ("SEM_CONSERTO", "Sem conserto"),
+        ("AGUARDANDO_RETIRADA", "Aguardando retirada"),
         ("ENTREGUE", "Entregue"),
     ]
 

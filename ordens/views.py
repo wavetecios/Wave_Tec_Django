@@ -1,3 +1,5 @@
+from decimal import Decimal, InvalidOperation
+
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 
@@ -6,6 +8,8 @@ from .models import OrdemServico
 from equipamentos.models import Equipamento
 from financeiro.models import Lancamento
 from atendimentos.models import Atendimento
+from django.core.exceptions import ValidationError
+from django.db import models
 
 
 def _sync_finance_from_ordem(ordem):
@@ -266,13 +270,23 @@ def finalizar_ordem(request, ordem_id):
         if status in dict(OrdemServico.STATUS):
             ordem.status = status
 
+        valor = request.POST.get("valor", "").strip()
+        try:
+            ordem.valor = Decimal(valor) if valor else Decimal("0.00")
+        except InvalidOperation:
+            ordem.valor = Decimal("0.00")
+
         ordem.save()
 
         atendimento = getattr(ordem, "atendimento", None)
         if atendimento:
             atendimento.forma_pagamento = ordem.forma_pagamento
             atendimento.status = ordem.status
+            atendimento.valor = ordem.valor
             atendimento.save()
+            if ordem.status == "ENTREGUE" and atendimento.valor > 0:
+                atendimento.valor = atendimento.valor
+                atendimento.save()
 
         _sync_finance_from_ordem(ordem)
 

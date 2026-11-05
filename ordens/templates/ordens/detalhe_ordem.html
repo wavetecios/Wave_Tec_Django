@@ -190,10 +190,10 @@ Ordem de Serviço #{{ ordem.id }}
 
                 <div class="col-md-6">
 
-                    <strong>Valor</strong>
+                    <strong>Valor do Serviço</strong>
 
                     <p>
-                        R$ {{ atendimento.valor }}
+                        R$ {{ atendimento.valor|floatformat:2 }}
                     </p>
 
                 </div>
@@ -210,6 +210,16 @@ Ordem de Serviço #{{ ordem.id }}
                 </div>
 
             </div>
+
+
+            {% if atendimento.status == 'AGUARDANDO_RETIRADA' or atendimento.status == 'ENTREGUE' %}
+            <div class="mt-3">
+                <strong>Status do Atendimento</strong>
+                <p>
+                    {{ atendimento.get_status_display }}
+                </p>
+            </div>
+            {% endif %}
 
 
         {% else %}
@@ -243,68 +253,33 @@ Ordem de Serviço #{{ ordem.id }}
 
                 <div class="d-flex gap-2 flex-wrap">
 
-
                     {% if user.is_superuser or user.tecnico.perfil == 'ADMIN' %}
-                    <a
-                        href="{% url 'finalizar_ordem' ordem.id %}"
-                        class="btn btn-warning">
-
+                    <a href="{% url 'finalizar_ordem' ordem.id %}" class="btn btn-warning">
                         🧾 Fechar OS
-
-                    </a>
-
-                    {% if atendimento %}
-                    <a
-                        href="{% url 'finalizar_atendimento' ordem.id %}"
-                        class="btn btn-success">
-
-                        ✅ Fechar Atendimento
-
                     </a>
                     {% endif %}
-                    {% endif %}
-
 
                     {% if atendimento %}
-
-                    <a
-                        href="{% url 'editar_atendimento' ordem.id %}"
-                        class="btn btn-outline-success">
-
-                        🛠️ Editar Atendimento
-
+                    <a href="{% url 'editar_atendimento' ordem.id %}" class="btn btn-success">
+                        {% if user.is_superuser or user.tecnico.perfil == 'ADMIN' %}
+                            ✅ Finalizar / Editar Atendimento
+                        {% else %}
+                            🛠️ Editar Atendimento
+                        {% endif %}
                     </a>
-
                     {% else %}
-
-                    <a
-                        href="{% url 'novo_atendimento' ordem.id %}"
-                        class="btn btn-primary">
-
+                    <a href="{% url 'novo_atendimento' ordem.id %}" class="btn btn-primary">
                         🔧 Registrar Atendimento
-
                     </a>
-
                     {% endif %}
 
-
-                    <a
-                        href="{% url 'imprimir_entrada' ordem.id %}"
-                        class="btn btn-info">
-
+                    <a href="{% url 'imprimir_entrada' ordem.id %}" class="btn btn-info">
                         🧾 Entrada A5
-
                     </a>
 
-
-                    <a
-                        href="{% url 'imprimir_os' ordem.id %}"
-                        class="btn btn-dark">
-
+                    <a href="{% url 'imprimir_os' ordem.id %}" class="btn btn-dark">
                         📄 Relatório A4
-
                     </a>
-
 
                 </div>
 
@@ -328,6 +303,28 @@ Ordem de Serviço #{{ ordem.id }}
 
     </div>
 
+</div>
+
+<div class="card shadow-sm mb-4 border-0">
+    <div class="card-body">
+        {% if ordem.status == 'AGUARDANDO_RETIRADA' %}
+        <div class="alert alert-info mb-0">
+            <strong>📦 Aguardando retirada:</strong> o cliente ainda não buscou o equipamento.
+        </div>
+        {% elif ordem.status == 'ENTREGUE' %}
+        <div class="alert alert-success mb-0">
+            <strong>✅ Entregue:</strong> o serviço foi concluído e o equipamento foi entregue ao cliente.
+        </div>
+        {% elif ordem.status == 'PRONTO' %}
+        <div class="alert alert-warning mb-0">
+            <strong>🛠️ Pronto:</strong> o técnico concluiu o serviço, aguardando a confirmação financeira e retirada.
+        </div>
+        {% else %}
+        <div class="alert alert-secondary mb-0">
+            <strong>Status atual:</strong> {{ ordem.get_status_display }}
+        </div>
+        {% endif %}
+    </div>
 </div>
 
 {% endblock %}

@@ -87,6 +87,10 @@ def editar_tecnico(request, tecnico_id):
             username = request.POST.get('username', '').strip()
             email = request.POST.get('email', '').strip()
             if username:
+                existing_user = User.objects.filter(username=username).exclude(pk=tecnico.user.pk).first()
+                if existing_user:
+                    messages.error(request, 'Já existe um usuário com este nome de login.')
+                    return render(request, 'usuarios/editar_tecnico.html', {'tecnico': tecnico})
                 tecnico.user.username = username
             if email:
                 tecnico.user.email = email

@@ -112,9 +112,15 @@ Ordens de Serviço
                                 Sem conserto
                             </span>
 
+                        {% elif ordem.status == "AGUARDANDO_RETIRADA" %}
+
+                            <span class="badge bg-info text-dark">
+                                Aguardando retirada
+                            </span>
+
                         {% elif ordem.status == "ENTREGUE" %}
 
-                            <span class="badge bg-secondary">
+                            <span class="badge bg-success">
                                 Entregue
                             </span>
 
