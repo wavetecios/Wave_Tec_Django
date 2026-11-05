@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: wave-tec-manager
+    env: python
+    buildCommand: "./build.sh"
+    startCommand: "gunicorn wave_tec.wsgi:application"
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.10.12"
+      - key: DEBUG
+        value: "False"
+      - key: SECRET_KEY
+        generateValue: true
