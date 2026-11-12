@@ -95,6 +95,31 @@
 
                 </li>
 
+                {% if user.is_authenticated and user.is_staff %}
+                <li class="nav-item dropdown">
+
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+
+                        💾 Backup
+
+                    </a>
+
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li>
+                            <a class="dropdown-item" href="{% url 'exportar_backup' %}?formato=json">
+                                Exportar JSON
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="{% url 'exportar_backup' %}?formato=csv">
+                                Exportar CSV (ZIP)
+                            </a>
+                        </li>
+                    </ul>
+
+                </li>
+                {% endif %}
+
                 {% if user.is_superuser or user.tecnico.perfil == 'ADMIN' %}
                 <li class="nav-item">
 
