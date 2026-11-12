@@ -11,6 +11,12 @@ urlpatterns = [
     ),
 
     path(
+        "<int:cliente_id>/",
+        views.detalhe_cliente,
+        name="detalhe_cliente"
+    ),
+
+    path(
         "novo/",
         views.novo_cliente,
         name="novo_cliente"

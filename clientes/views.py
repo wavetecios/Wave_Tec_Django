@@ -3,6 +3,8 @@ from django.contrib.auth.decorators import login_required
 
 from usuarios.decorators import tecnico_required, admin_required
 from .models import Cliente
+from equipamentos.models import Equipamento
+from ordens.models import OrdemServico
 
 
 def limpar_telefone(valor):
@@ -20,6 +22,34 @@ def lista_clientes(request):
         "clientes/lista_clientes.html",
         {
             "clientes": clientes
+        }
+    )
+
+
+@login_required
+@tecnico_required
+def detalhe_cliente(request, cliente_id):
+
+    cliente = get_object_or_404(
+        Cliente,
+        id=cliente_id
+    )
+
+    equipamentos = Equipamento.objects.filter(
+        cliente=cliente
+    ).order_by("-id")
+
+    ordens = OrdemServico.objects.filter(
+        equipamento_cadastrado__cliente=cliente
+    ).order_by("-id")
+
+    return render(
+        request,
+        "clientes/detalhe_cliente.html",
+        {
+            "cliente": cliente,
+            "equipamentos": equipamentos,
+            "ordens": ordens,
         }
     )
 

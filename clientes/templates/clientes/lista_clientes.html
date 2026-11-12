@@ -54,7 +54,11 @@ Clientes
 
                     <td>{{ cliente.id }}</td>
 
-                    <td>{{ cliente.nome }}</td>
+                    <td>
+                        <a href="{% url 'detalhe_cliente' cliente.id %}" class="text-decoration-none fw-semibold text-primary">
+                            {{ cliente.nome }}
+                        </a>
+                    </td>
 
                     <td>{{ cliente.telefone }}</td>
 
