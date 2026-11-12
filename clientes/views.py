@@ -5,6 +5,10 @@ from usuarios.decorators import tecnico_required, admin_required
 from .models import Cliente
 
 
+def limpar_telefone(valor):
+    return "".join(caractere for caractere in (valor or "") if caractere.isdigit())
+
+
 @login_required
 @tecnico_required
 def lista_clientes(request):
@@ -27,7 +31,7 @@ def novo_cliente(request):
     if request.method == "POST":
 
         nome = request.POST["nome"]
-        telefone = request.POST["telefone"]
+        telefone = limpar_telefone(request.POST["telefone"])
         endereco = request.POST["endereco"]
 
         cliente = Cliente.objects.create(
@@ -59,7 +63,7 @@ def editar_cliente(request, cliente_id):
     if request.method == "POST":
 
         cliente.nome = request.POST["nome"]
-        cliente.telefone = request.POST["telefone"]
+        cliente.telefone = limpar_telefone(request.POST["telefone"])
         cliente.endereco = request.POST["endereco"]
 
         cliente.save()

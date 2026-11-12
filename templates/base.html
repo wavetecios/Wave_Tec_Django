@@ -178,7 +178,106 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const cleanDigits = (value) => (value || '').replace(/\D/g, '');
 
+        const formatPhone = (value) => {
+            const digits = cleanDigits(value).substring(0, 11);
+
+            if (digits.length <= 10) {
+                return digits.replace(/(\d{2})(\d)/, '($1) $2').replace(/(\d{4})(\d)/, '$1-$2');
+            }
+
+            return digits.replace(/(\d{2})(\d)/, '($1) $2').replace(/(\d{5})(\d)/, '$1-$2');
+        };
+
+        const formatCpf = (value) => {
+            const digits = cleanDigits(value).substring(0, 11);
+            return digits
+                .replace(/(\d{3})(\d)/, '$1.$2')
+                .replace(/(\d{3})(\d)/, '$1.$2')
+                .replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+        };
+
+        const formatCnpj = (value) => {
+            const digits = cleanDigits(value).substring(0, 14);
+            return digits
+                .replace(/(\d{2})(\d)/, '$1.$2')
+                .replace(/(\d{3})(\d)/, '$1.$2')
+                .replace(/(\d{3})(\d)/, '$1/$2')
+                .replace(/(\d{4})(\d{1,2})$/, '$1-$2');
+        };
+
+        const formatCpfCnpj = (value) => {
+            const digits = cleanDigits(value);
+            if (digits.length <= 11) {
+                return formatCpf(digits);
+            }
+            return formatCnpj(digits);
+        };
+
+        const formatInputByName = (input) => {
+            const name = (input.name || '').toLowerCase();
+
+            if (/whatsapp|celular/.test(name)) {
+                input.setAttribute('maxlength', '15');
+                input.value = formatPhone(input.value || '');
+                return;
+            }
+
+            if (/cpf/.test(name) || /cnpj/.test(name)) {
+                input.setAttribute('maxlength', '18');
+                input.value = formatCpfCnpj(input.value || '');
+                return;
+            }
+
+            if (/telefone/.test(name)) {
+                input.setAttribute('maxlength', '15');
+                input.value = formatPhone(input.value || '');
+            }
+        };
+
+        document.querySelectorAll('input[type="text"], input:not([type])').forEach(function (input) {
+            const name = (input.name || '').toLowerCase();
+            if (!/(telefone|whatsapp|celular|cpf|cnpj)/.test(name)) {
+                return;
+            }
+
+            input.setAttribute('inputmode', 'numeric');
+            input.setAttribute('autocomplete', 'off');
+            formatInputByName(input);
+
+            input.addEventListener('input', function () {
+                const fieldName = (this.name || '').toLowerCase();
+
+                if (/whatsapp|celular/.test(fieldName)) {
+                    this.value = formatPhone(this.value);
+                    return;
+                }
+
+                if (/cpf/.test(fieldName) || /cnpj/.test(fieldName)) {
+                    this.value = formatCpfCnpj(this.value);
+                    return;
+                }
+
+                if (/telefone/.test(fieldName)) {
+                    this.value = formatPhone(this.value);
+                }
+            });
+        });
+
+        document.querySelectorAll('form').forEach(function (form) {
+            form.addEventListener('submit', function () {
+                this.querySelectorAll('input[name]').forEach(function (input) {
+                    const name = (input.name || '').toLowerCase();
+                    if (/(telefone|whatsapp|celular|cpf|cnpj)/.test(name)) {
+                        input.value = cleanDigits(input.value);
+                    }
+                });
+            });
+        });
+    });
+</script>
 </body>
-
 </html>
